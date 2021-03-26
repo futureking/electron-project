@@ -1,0 +1,24 @@
+{
+  "compilerOptions": {
+    "lib": ["dom", "es2015", "es2016", "es2017"],
+    "noImplicitAny": false,
+    "sourceMap": true,
+    "outDir": "dist",
+    "baseUrl": "./",
+    "jsx": "preserve",
+    "allowJs": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "strictPropertyInitialization": false,
+    "noEmit": false,
+    "skipLibCheck": true,
+    "resolveJsonModule": true,
+    "paths": {
+      "#/*": ["./src/main/*"],
+      "@/*": ["./src/renderer/*"],
+      "@@/*": ["./src/renderer/.umi/*"]
+    }
+  },
+  "include": ["src/**/*"],
+  "extends": "./node_modules/electron-webpack/tsconfig-base.json"
+}
