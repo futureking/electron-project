@@ -13,6 +13,10 @@ const Routes: IRoute[] = [
         path: '/settings',
         component: './Settings',
       },
+      {
+        path: '/login',
+        component: './Login',
+      },
     ],
   },
 ];
