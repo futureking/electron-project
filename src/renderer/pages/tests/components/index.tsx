@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useEffect } from "react";
 import { useStore } from '../store';
 
 const  Comps: React.FC = () => {

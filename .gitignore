@@ -7,3 +7,4 @@ release
 .umi
 # src/renderer/.umi-production - Umi 打包时临时文件
 .umi-production
+node_modules

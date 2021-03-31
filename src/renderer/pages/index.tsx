@@ -1,5 +1,4 @@
 import { Link } from 'umi';
-import Login from './login';
 import Test from './tests';
 
 export default function Index() {
