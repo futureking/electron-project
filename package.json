@@ -50,13 +50,14 @@
   "dependencies": {
     "ahooks": "^2.10.0",
     "react-transition-group": "^4.4.1",
-    "umi": "^3.3.9"
+    "umi": "^3.3.9",
+    "unstated-next": "^1.1.0"
   },
   "devDependencies": {
     "@types/react-transition-group": "^4.4.0",
     "@umijs/fabric": "^2.5.6",
-    "@umijs/preset-react": "^1.7.13",
     "@umijs/hooks": "^1.9.3",
+    "@umijs/preset-react": "^1.7.13",
     "concurrently": "^6.0.0",
     "cross-env": "^7.0.2",
     "electron": "^11.2.1",

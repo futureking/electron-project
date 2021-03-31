@@ -1,7 +1,6 @@
 import { Link } from 'umi';
 import Login from './login';
-
-import STYLES from './index.less';
+import Test from './tests';
 
 export default function Index() {
   return (
@@ -11,7 +10,7 @@ export default function Index() {
         <h1>Yay! Welcome to Electron Pro!</h1>
       </Link>
       <br />
-      <Login />
+      <Test />
     </div>
   );
 }
