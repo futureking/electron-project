@@ -14,7 +14,7 @@ const TransitionLayout = withRouter(({ location, children }) => {
         }}
       >
         {/* 由于开发环境开启了 dynamicImport，会导致注入的动画样式丢失，故需要保证顶级容器的不变性 */}
-        <div>{children}</div>
+        <div style={{width:'100%', height: '100%'}}>{children}</div>
       </CSSTransition>
     </SwitchTransition>
   );

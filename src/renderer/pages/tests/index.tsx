@@ -3,7 +3,7 @@ import Comps from './components'
 import { setProvider, useStore } from './store';
 
 const  Tests: React.FC = () => {
-  const [STORE, dispatch] = useStore();
+  const [STORE, dispatch]: any = useStore();
   console.info(STORE, dispatch);
   return (
     <div className="wrap">

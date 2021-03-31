@@ -19,7 +19,7 @@ export default defineConfig({
   dynamicImport:
     process.env.NODE_ENV === 'development'
       ? {
-          loading: '@/components/PageLoading',
+          loading: '@/components/pageloading',
         }
       : false,
   // umi routes: https://umijs.org/docs/routing

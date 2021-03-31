@@ -48,6 +48,8 @@
     "url": "https://github.com/theprimone"
   },
   "dependencies": {
+    "@antv/x6": "^1.18.1",
+    "@antv/x6-react-components": "^1.1.7",
     "ahooks": "^2.10.0",
     "lodash": "^4.17.21",
     "react-transition-group": "^4.4.1",

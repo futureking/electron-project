@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useStore } from '../store';
 
 const  Comps: React.FC = () => {
-  const [STORE, dispatch] = useStore();
+  const [STORE, dispatch]: any = useStore();
   
   console.info(STORE);
 

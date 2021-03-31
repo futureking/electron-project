@@ -12,8 +12,12 @@ let win: Electron.BrowserWindow | null;
 
 function createWindow() {
   win = new BrowserWindow({
+    width: 1140,
     height: 600,
-    width: 800,
+    transparent: true,
+    frame: false,
+    backgroundColor: '#000',
+    titleBarStyle: 'hiddenInset',
     webPreferences: {
       // about remote: https://www.electronjs.org/docs/api/remote#remote
       // enableRemoteModule break change: https://www.electronjs.org/docs/breaking-changes#default-changed-enableremotemodule-defaults-to-false
