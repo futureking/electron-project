@@ -17,6 +17,10 @@ const Routes: IRoute[] = [
         path: '/dashboard',
         component: './dashboard',
       },
+      {
+        path: '/mainPage',
+        component: './mainPage',
+      }
     ],
   },
 ];

@@ -1,15 +1,23 @@
+import React from 'react';
 import { Link } from 'umi';
-import Test from './tests';
+import { setProvider, useStore } from '../store';
 import STYLES from './index.less';
 
-export default function Index() {
+const Index: React.FC = () => {
   return (
     <div className={STYLES.wrap}>
       <Link to='/dashboard'>
-        <h1>Yay! Welcome to Electron Pro!</h1>
+        <h2>dashboard</h2>
       </Link>
       <br />
-      <Test />
+      <Link to="/login">
+       <h3>login</h3>
+      </Link>
+      <Link to="/mainpage">
+        <h4>mainpage</h4>
+      </Link>
     </div>
   );
-}
+};
+
+export default setProvider(Index);
