@@ -17,7 +17,7 @@ function createWindow() {
     transparent: true,
     frame: false,
     backgroundColor: '#000',
-    titleBarStyle: 'hiddenInset',
+    
     webPreferences: {
       // about remote: https://www.electronjs.org/docs/api/remote#remote
       // enableRemoteModule break change: https://www.electronjs.org/docs/breaking-changes#default-changed-enableremotemodule-defaults-to-false

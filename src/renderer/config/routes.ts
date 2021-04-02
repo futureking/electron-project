@@ -10,8 +10,8 @@ const Routes: IRoute[] = [
         component: './index',
       },
       {
-        path: '/settings',
-        component: './Settings',
+        path: '/login',
+        component: './login',
       },
       {
         path: '/dashboard',

@@ -1,18 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import STYLES from './index.less';
 
 
 const CustomMenu: React.FC = () => {  
-  const [current, setCurrent] = useState('1');
-
-  const handleClick = (e) => {
-    setCurrent(e.key);
-  }
 
   return (
-    <ul className={STYLES.wrap}>
-      <li></li>
-    </ul>
+    <div className={STYLES.wrap}>
+      一二三
+    </div>
   )
 }
 
