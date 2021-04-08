@@ -62,15 +62,7 @@ for (let i = 0; i < keyPoints.length; i += 2) {
   })
 }
 
-// const Board: React.FC = () => {
 
-
-//   return (
-//     <div className={STYLES.wrap} ref="refContainer">
-
-//     </div>
-//   )
-// };
 
 class Board extends React.Component {
   private container: HTMLDivElement;
@@ -101,9 +93,12 @@ class Board extends React.Component {
 
   render() {
     return(
-      <div className={STYLES.wrap} ref={this.refContainer}></div>
+      <div className={STYLES.wrap} ref={this.refContainer}>
+        <div className={STYLES.content}></div>
+      </div>
     )
   }
 }
+
 
 export default Board;
