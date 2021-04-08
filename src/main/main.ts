@@ -1,6 +1,7 @@
 import * as path from 'path';
 import { format, pathToFileURL } from 'url';
 import { app, BrowserWindow, ipcMain } from 'electron';
+import debug from 'electron-debug';
 
 import { author } from '../../package.json';
 import setApplicationMenu from './utils/menu';
@@ -10,12 +11,13 @@ global.author = `${author.name} <${author.url}>`;
 
 let win: Electron.BrowserWindow | null;
 
+debug();
 function createWindow() {
   win = new BrowserWindow({
     width: 1140,
     height: 600,
-    transparent: true,
-    frame: false,
+    // transparent: true,
+    // frame: false,
     backgroundColor: '#000',
     
     webPreferences: {

@@ -1,6 +1,6 @@
 import React from 'react';
-import CreateIcon from './img/create.png';
-import OpenIcon from './img/open.png';
+// import CreateIcon from './img/create.png';
+// import OpenIcon from './img/open.png';
 import STYLES from './index.less';
 
 const LeftMenu: React.FC = () => {
@@ -11,11 +11,11 @@ const LeftMenu: React.FC = () => {
       </div>
       <ul className={STYLES.list}>
         <li>
-          <img src={CreateIcon} />
+          {/* <img src={CreateIcon} /> */}
           Create New
         </li>
         <li>
-          <img src={OpenIcon} />
+          {/* <img src={OpenIcon} /> */}
           Open
         </li>
       </ul>

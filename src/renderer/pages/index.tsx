@@ -1,9 +1,10 @@
 import React from 'react';
 import { Link } from 'umi';
-import { setProvider, useStore } from '../store';
+import { setProvider } from '../store';
 import STYLES from './index.less';
 
 const Index: React.FC = () => {
+
   return (
     <div className={STYLES.wrap}>
       <Link to='/dashboard'>
