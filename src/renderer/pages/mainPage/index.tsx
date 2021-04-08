@@ -1,8 +1,8 @@
 import React from 'react';
-import { SplitBox } from '@antv/x6-react-components'
-import Layout from '../../layout';
-import TabList from '../../components/tabList';
-import Board from '../../components/board';
+import { SplitBox } from '@antv/x6-react-components';
+import Layout from '@/layout';
+import TabList from '@/components/tabList';
+import Board from '@/components/board';
 import '@antv/x6-react-components/es/split-box/style/index.css';
 
 import STYLES from './index.less';

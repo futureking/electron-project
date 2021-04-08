@@ -1,104 +1,52 @@
-import React from 'react';
-import { Graph } from '@antv/x6';
-import { GridLayout } from '@antv/layout'
-import STYLES from './index.less';
-
-const data: any = {
-  nodes: [],
-  edges: [],
-}
-const keyPoints = [
-  20,
-  12,
-  12,
-  4,
-  18,
-  12,
-  12,
-  6,
-  16,
-  17,
-  17,
-  10,
-  10,
-  3,
-  3,
-  2,
-  2,
-  9,
-  9,
-  10,
-]
-
-for (let i = 1; i <= 21; i++) {
-  data.nodes.push({
-    id: i,
-    shape: 'circle',
-    width: 32,
-    height: 32,
-    attrs: {
-      body: {
-        fill: keyPoints.includes(i) ? '#fd6d6f' : '#855af2',
-        stroke: 'transparent',
-      },
-      label: {
-        fill: '#ffffff',
-      },
-    },
-    label: i,
-  })
-}
-
-for (let i = 0; i < keyPoints.length; i += 2) {
-  data.edges.push({
-    source: keyPoints[i],
-    target: keyPoints[i + 1],
-    attrs: {
-      line: {
-        stroke: '#fd6d6f',
-        targetMarker: null,
-      },
-    },
-  })
-}
+import React, { useState, useEffect } from 'react'
+import { GithubOutlined } from '@ant-design/icons'
+import FlowGraph from './components/Graph';
+import ToolBar from '../ToolBar'
+import ConfigPanel from '../ConfigPanel'
+// import '../reset.less'
+// import '../global.css'
+import styles from './index.less'
 
 
+export default function () {
+  const [isReady, setIsReady] = useState(false)
 
-class Board extends React.Component {
-  private container: HTMLDivElement;
-
-  componentDidMount() {
-    const graph = new Graph({
-      container: this.container,
-      grid: true,
-    })
-
-    const gridLayout = new GridLayout({
-      type: 'grid',
-      begin: [10, 10],
-      width: 480,
-      height: 260,
-      sortBy: 'label',
-      rows: 3,
-      cols: 7,
-    })
-
-    const model = gridLayout.layout(data)
-    graph.fromJSON(model)
+  const getContainerSize = () => {
+    return {
+      width: document.body.offsetWidth - 581,
+      height: document.body.offsetHeight - 87,
+    }
   }
 
-  refContainer = (container: HTMLDivElement) => {
-    this.container = container
-  }
+  useEffect(() => {
+    const graph = FlowGraph.init()
+    setIsReady(true)
 
-  render() {
-    return(
-      <div className={STYLES.wrap} ref={this.refContainer}>
-        <div className={STYLES.content}></div>
+    const resizeFn = () => {
+      const { width, height } = getContainerSize()
+      graph.resize(width, height)
+    }
+    resizeFn()
+
+    window.addEventListener('resize', resizeFn)
+    return () => {
+      window.removeEventListener('resize', resizeFn)
+    }
+  }, [])
+
+  return (
+    <div className={styles.wrap}>
+      <div className={styles.header}>
+        <span>流程图 Demo</span>
       </div>
-    )
-  }
+      <div className={styles.content}>
+        <div id="stencil" className={styles.sider} />
+        <div className={styles.panel}>
+          <div className={styles.toolbar}>{isReady && <ToolBar />}</div>
+          <div id="container" className="x6-graph" />
+        </div>
+        <div className={styles.config}>{isReady && <ConfigPanel />}</div>
+      </div>
+    </div>
+  )
 }
-
-
-export default Board;
