@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react'
 import { Tabs, Row, Col, Input, Slider } from 'antd'
-import FlowGraph from '@/components/board/components/Graph'
+import FlowGraph from '@/components/Graph';
 import { Cell } from '@antv/x6'
 
 const { TabPane } = Tabs

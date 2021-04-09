@@ -9,25 +9,19 @@ export default class FlowGraph {
   public static init() {
     this.graph = new Graph({
       container: document.getElementById('container')!,
-      width: 1000,
-      height: 800,
       autoResize: true,
-      // grid: {
-      //   size: 10,
-      //   visible: true,
-      //   type: 'doubleMesh',
-      //   args: [
-      //     {
-      //       color: '#cccccc',
-      //       thickness: 1,
-      //     },
-      //     {
-      //       color: '#5F95FF',
-      //       thickness: 1,
-      //       factor: 4,
-      //     },
-      //   ],
-      // },
+      //滚动画布
+      scroller: {
+        // enabled: true,
+        // pannable: true,    //是否启用画布平移能力
+        pageVisible: false,  //是否分页
+        pageBreak: false,   //是否显示分页符
+      },
+      mousewheel: {
+        enabled: true,
+        modifiers: ['ctrl', 'meta'],
+      },
+      //点选、框选
       selecting: {
         enabled: true,
         multiple: true,
@@ -36,6 +30,7 @@ export default class FlowGraph {
         showNodeSelectionBox: true,
         filter: ['groupNode'],
       },
+      //连线选项
       connecting: {
         anchor: 'center',
         connectionPoint: 'anchor',
@@ -54,9 +49,9 @@ export default class FlowGraph {
                 },
               },
             },
-            router: {
-              name: 'manhattan',
-            },
+            // router: {
+            //   name: 'manhattan',
+            // },
             zIndex: 0,
           })
         },
@@ -133,24 +128,24 @@ export default class FlowGraph {
           title: '基础节点',
           graphHeight: 180,
         },
-        {
-          name: 'combination',
-          title: '组合节点',
-          layoutOptions: {
-            columns: 1,
-            marginX: 60,
-          },
-          graphHeight: 260,
-        },
-        {
-          name: 'group',
-          title: '节点组',
-          graphHeight: 100,
-          layoutOptions: {
-            columns: 1,
-            marginX: 60,
-          },
-        },
+        // {
+        //   name: 'combination',
+        //   title: '组合节点',
+        //   layoutOptions: {
+        //     columns: 1,
+        //     marginX: 60,
+        //   },
+        //   graphHeight: 260,
+        // },
+        // {
+        //   name: 'group',
+        //   title: '节点组',
+        //   graphHeight: 100,
+        //   layoutOptions: {
+        //     columns: 1,
+        //     marginX: 60,
+        //   },
+        // },
       ],
     })
     const stencilContainer = document.querySelector('#stencil')
@@ -160,21 +155,25 @@ export default class FlowGraph {
   private static initShape() {
     const { graph } = this
     const r1 = graph.createNode({
-      shape: 'flow-chart-rect',
+      shape: 'flow-chart-rect1',
       attrs: {
         body: {
-          rx: 24,
-          ry: 24,
+          rx: 20,
+          ry: 20,
         },
         text: {
           textWrap: {
             text: '起始节点',
+            fill: '#fff'
           },
         },
+        label: {
+          fill: '#fff'
+        }
       },
     })
     const r2 = graph.createNode({
-      shape: 'flow-chart-rect',
+      shape: 'flow-chart-rect1',
       attrs: {
         text: {
           textWrap: {
@@ -184,9 +183,9 @@ export default class FlowGraph {
       },
     })
     const r3 = graph.createNode({
-      shape: 'flow-chart-rect',
-      width: 52,
-      height: 52,
+      shape: 'flow-chart-rect1',
+      width: 42,
+      height: 42,
       angle: 45,
       attrs: {
         'edit-text': {
@@ -207,7 +206,7 @@ export default class FlowGraph {
             position: {
               name: 'top',
               args: {
-                dx: -26,
+                dx: 0,
               },
             },
           },
@@ -215,7 +214,7 @@ export default class FlowGraph {
             position: {
               name: 'right',
               args: {
-                dy: -26,
+                dy: 0,
               },
             },
           },
@@ -223,7 +222,7 @@ export default class FlowGraph {
             position: {
               name: 'bottom',
               args: {
-                dx: 26,
+                dx: 0,
               },
             },
           },
@@ -231,7 +230,7 @@ export default class FlowGraph {
             position: {
               name: 'left',
               args: {
-                dy: 26,
+                dy: 0,
               },
             },
           },
@@ -239,9 +238,9 @@ export default class FlowGraph {
       },
     })
     const r4 = graph.createNode({
-      shape: 'flow-chart-rect',
-      width: 70,
-      height: 70,
+      shape: 'flow-chart-rect1',
+      width: 50,
+      height: 50,
       attrs: {
         body: {
           rx: 35,
@@ -254,31 +253,7 @@ export default class FlowGraph {
         },
       },
     })
-
-    // const c1 = graph.createNode({
-    //   shape: 'flow-chart-image-rect',
-    // })
-    // const c2 = graph.createNode({
-    //   shape: 'flow-chart-title-rect',
-    // })
-    // const c3 = graph.createNode({
-    //   shape: 'flow-chart-animate-text',
-    // })
-
-    // const g1 = graph.createNode({
-    //   shape: 'groupNode',
-    //   attrs: {
-    //     text: {
-    //       text: 'Group Name',
-    //     },
-    //   },
-    //   data: {
-    //     parent: true,
-    //   },
-    // })
     this.stencil.load([r1, r2, r3, r4], 'basic')
-    // this.stencil.load([c1, c2, c3], 'combination')
-    // this.stencil.load([g1], 'group')
   }
 
   private static initGraphShape() {

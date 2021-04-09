@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { Tabs, Row, Col, Select, Slider, Input, Checkbox } from 'antd'
-import FlowGraph from '@/components/board/components/Graph'
+import FlowGraph from '@/components/Graph'
 
 const { TabPane } = Tabs
 

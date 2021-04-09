@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import ConfigGrid from './ConfigGrid'
 import ConfigNode from './ConfigNode'
 import ConfigEdge from './ConfigEdge'
-import FlowGraph from '@/components/board/components/Graph'
+import FlowGraph from '@/components/Graph'
 import { useGridAttr } from '@/hooks/global'
 import styles from './index.less'
 
