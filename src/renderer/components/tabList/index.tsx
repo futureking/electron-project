@@ -1,51 +1,78 @@
 import React, { useState, useEffect } from 'react';
-import { Tabs } from 'antd';
+import classnames from 'classnames';
+import { Tooltip } from 'antd';
+import { CloseOutlined, PlusOutlined } from '@ant-design/icons';
 import STYLES from './index.less';
 
-const { TabPane } = Tabs;
+interface InitData {
+  id: number,
+  title: string,
+  body: string,
+  createAt: number,
+  isNew: boolean
+}
 
-const initialPanes = [
-  { title: 'Tab 1', content: 'Content of Tab 1', key: '1' },
-  { title: 'Tab 2', content: 'Content of Tab 2', key: '2' },
+const initData: Array<InitData> = [
   {
-    title: 'Tab 3',
-    content: 'Content of Tab 3',
-    key: '3',
-    closable: false,
+    "id": 111,
+    "title": "项目一",
+    "body": "请新建项目",
+    "createAt": 1123123123123,
+    "isNew": true
   },
+  {
+    "id": 222,
+    "title": "项目二",
+    "body": "请新建项目",
+    "createAt": 1123123123123,
+    "isNew": false
+  }
 ];
+console.info(initData)
 
-const TabList: React.FC = () => {
+const TabList: React.FC = (props: any) => {
+  const { activeId=111 } = props;
 
-  const [activeKey, setActiveKey] = useState(initialPanes[0].key);
-  const [panes, setPanes] = useState(initialPanes);
-
-  const onChange = activeKey => {
-    console.info(activeKey)
-    setActiveKey(activeKey);
-  };
-
-  const onEdit = () => {
+  const onTabClick = () => {
 
   }
 
+  const onCloseTab = () => {
+
+  }
 
   return(
-    <div className={STYLES.wrap}>
-     <Tabs
-        type="editable-card"
-        onChange={onChange}
-        activeKey={activeKey}
-        onEdit={onEdit}
-        size="small"
-      >
-        {panes.map(pane => (
-          <TabPane tab={pane.title} key={pane.key} closable={pane.closable}>
-            {pane.content}
-          </TabPane>
-        ))}
-      </Tabs>
-    </div>
+    <ul className={classnames(STYLES.wrap)}>
+      {
+        initData.map(tab => {
+          return (
+            <Tooltip title={tab.title}>
+              <li className={STYLES.tab}>
+                <a 
+                  href=""
+                  className={classnames(STYLES.link, {
+                    [STYLES.active]: tab.id === activeId,
+                    [STYLES.unSaved]: tab.isNew
+                  })}
+                  onClick={onTabClick}
+                >
+                  {tab.title}
+                  <span 
+                    className={STYLES.closeIcon}
+                    onClick={onCloseTab}
+                  >
+                    <CloseOutlined style={{fontSize: '12px', marginLeft: '4px'}} />
+                  </span>
+                  { tab.isNew && 
+                    <span className={STYLES.unSavedIcon}></span>
+                  }
+                </a>
+              </li>
+            </Tooltip>
+          )
+        })
+      }
+    </ul>
   )
 };
 
