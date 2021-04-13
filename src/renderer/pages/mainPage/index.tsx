@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { SplitBox } from '@antv/x6-react-components';
 import { Input, Slider } from 'antd';
-import Layout from '@/layout';
-import TabList from '@/components/tabList';
+// import Layout from '@/layout';
+import TabList from './components/TabList';
 import FlowGraph from '@/components/Graph';
-import ToolBar from '@/components/ToolBar';
+import ToolBar from './components/ToolBar';
 import ConfigPanel from '@/components/ConfigPanel';
 import '@antv/x6-react-components/es/split-box/style/index.css';
 
@@ -38,61 +38,65 @@ const DashBoard: React.FC = () => {
   }, [])
 
   return(
-    <Layout>
-      <div className={STYLES.wrap}>
+    <div className={STYLES.wrap}>
+      <div className={STYLES.header}>
         <div className={STYLES.tabList}>
           <TabList />
         </div>
-        <div className={STYLES.content}>
-          <SplitBox
-            split="vertical"
-            size={240}
-            resizable={false}
-            primary="first"
-          >
-            <div className={STYLES.area}>
-              <div id="stencil" className={STYLES.sider} />
-            </div>
-            <div className={STYLES.area}>
-              <SplitBox
-                split="vertical"
-                minSize={40}
-                maxSize={-80}
-                resizable={false}
-                defaultSize={300}
-                primary="second"
-              >
-                <div className={STYLES.area}>
-                  <SplitBox
-                    split="horizontal"
-                    minSize={40}
-                    maxSize={-40}
-                    defaultSize={450}
-                    primary="first"
-                  >
-                    <div className={STYLES.area} >
-                      <div className={STYLES.panel}>
-                        <div className={STYLES.toolbar}>{isReady && <ToolBar />}</div>
-                        <div id="container" className="x6-graph" />
-                      </div>
-                      {/* <Board /> */}
-                    </div>
-                    <div className={STYLES.area} >
-                      444
-                      <Input size="large" placeholder="sdfsdf" />
-                      <Slider />
-                    </div>
-                  </SplitBox>
-                </div>
-                <div className={STYLES.area} >
-                  <div className={STYLES.config}>{isReady && <ConfigPanel />}</div>
-                </div>
-              </SplitBox>
-            </div>
-          </SplitBox>
+        <div className={STYLES.toolbar}>
+          <ToolBar />
         </div>
       </div>
-    </Layout>
+      <div className={STYLES.content}>
+        <SplitBox
+          split="vertical"
+          size={240}
+          resizable={false}
+          primary="first"
+        >
+          <div className={STYLES.area}>
+            <div id="stencil" className={STYLES.sider} />
+          </div>
+          <div className={STYLES.area}>
+            <SplitBox
+              split="vertical"
+              minSize={40}
+              maxSize={-80}
+              resizable={false}
+              defaultSize={300}
+              primary="second"
+            >
+              <div className={STYLES.area}>
+                <SplitBox
+                  split="horizontal"
+                  minSize={40}
+                  maxSize={-40}
+                  defaultSize={450}
+                  primary="first"
+                >
+                  <div className={STYLES.area} >
+                    <div className={STYLES.panel}>
+                      {/* <div className={STYLES.toolbar}>{isReady && <ToolBar />}</div> */}
+                      <div id="container" className="x6-graph" />
+                    </div>
+                    {/* <Board /> */}
+                  </div>
+                  <div className={STYLES.area} >
+                    <div className={STYLES.wave}></div>
+                    444
+                    <Input size="large" placeholder="sdfsdf" />
+                    <Slider />
+                  </div>
+                </SplitBox>
+              </div>
+              <div className={STYLES.area} >
+                <div className={STYLES.config}>{isReady && <ConfigPanel />}</div>
+              </div>
+            </SplitBox>
+          </div>
+        </SplitBox>
+      </div>
+    </div>
   )
 }
 

@@ -2,14 +2,16 @@
 .wrap {
   height: 100%;
   background: #333;
-  .tabList {
-    width: 100%;
-    height: 35px;
-    background-color: rgb(88, 88, 88);
+  .header {
+    .tabList{
+      width: 100%;
+      height: 35px;
+      background-color: rgb(88, 88, 88);
+    }
   }
   .content {
     width: 100%;
-    height: calc(100% - 48px);
+    height: calc(100% - 83px);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -18,9 +20,13 @@
       height: 100%;
     }
     .sider {
+      height: 100%;
+      background: #292E35;
       border-right: 1px solid rgba(0, 0, 0, 0.08);
     }
     .panel {
+      height: 100%;
+      background: @gray-900;
       .toolbar {
         position: absolute;
         width: 100%;
@@ -32,23 +38,29 @@
       }
     }
     .config {
+      height: 100%;
+      background: #292E35;
       padding: 0 24px;
       border-left: 1px solid rgba(0, 0, 0, 0.08);
+    }
+    .wave {
+      height: 100%;
+      background: @gray-900;
     }
   }
 }
 
 :global {
   .x6-split-box-vertical > .x6-split-box-resizer{
-    width: 6px;
-    background: #3c3c3c !important;
+    width: 4px;
+    background: #292E35 !important;
   }
   .x6-split-box-horizontal > .x6-split-box-resizer {
-    height: 8px;
-    background: #3c3c3c !important;
+    height: 4px;
+    background: #292E35 !important;
   }
   .x6-widget-stencil {
-    background: #333;
+    background: #292E35;
   }
 }
 

@@ -44,7 +44,7 @@ const TabList: React.FC = (props: any) => {
 
   return(
     <div className={STYLES.wrap}>
-      {/* <i><img src={require('./imgs/logo.svg')} /></i> */}
+      <i><img src={require('./imgs/logo.svg')} /></i>
       <ul>
         {
           tabList.map(tab => {
