@@ -4,6 +4,7 @@ import { Input, Slider } from 'antd';
 // import Layout from '@/layout';
 import TabList from './components/TabList';
 import FlowGraph from '@/components/Graph';
+// import StreamGraph from './components/StreamGraph';
 import ToolBar from './components/ToolBar';
 import ConfigPanel from '@/components/ConfigPanel';
 import '@antv/x6-react-components/es/split-box/style/index.css';
@@ -50,12 +51,17 @@ const DashBoard: React.FC = () => {
       <div className={STYLES.content}>
         <SplitBox
           split="vertical"
-          size={240}
+          size={280}
           resizable={false}
           primary="first"
         >
           <div className={STYLES.area}>
-            <div id="stencil" className={STYLES.sider} />
+            {/* <div id="stencil" className={STYLES.sider}>
+              <StreamGraph />
+            </div> */}
+            <div id="stencil" className={STYLES.sider}>
+              {/* <StreamGraph /> */}
+            </div>
           </div>
           <div className={STYLES.area}>
             <SplitBox
@@ -76,10 +82,12 @@ const DashBoard: React.FC = () => {
                 >
                   <div className={STYLES.area} >
                     <div className={STYLES.panel}>
-                      {/* <div className={STYLES.toolbar}>{isReady && <ToolBar />}</div> */}
+                      <div className={STYLES.toolbar}>{isReady && <ToolBar />}</div>
                       <div id="container" className="x6-graph" />
                     </div>
-                    {/* <Board /> */}
+                    {/* <div className={STYLES.panel}>
+                      <div id="container" className="x6-graph" />
+                    </div> */}
                   </div>
                   <div className={STYLES.area} >
                     <div className={STYLES.wave}></div>

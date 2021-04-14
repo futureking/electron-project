@@ -1,4 +1,6 @@
 import { Graph, Addon, FunctionExt, Shape } from '@antv/x6'
+import '@antv/x6-react-shape'
+import BasicTransient from '../Nodes/BasicTransient';
 import './shape'
 import graphData from './data'
 
@@ -110,10 +112,47 @@ export default class FlowGraph {
       },
     })
     this.initStencil()
+    // this.initStencil2()
     this.initShape()
     this.initGraphShape()
     this.initEvent()
     return this.graph
+  }
+
+  private static initStencil2() {
+    this.stencil = new Addon.Stencil({
+      target: this.graph,
+      stencilGraphWidth: 280,
+      search: { rect: true },
+      collapsable: true,
+      groups: [
+        {
+          name: 'basic',
+          title: '基础节点',
+          graphHeight: 180,
+        },
+        // {
+        //   name: 'combination',
+        //   title: '组合节点',
+        //   layoutOptions: {
+        //     columns: 1,
+        //     marginX: 60,
+        //   },
+        //   graphHeight: 260,
+        // },
+        // {
+        //   name: 'group',
+        //   title: '节点组',
+        //   graphHeight: 100,
+        //   layoutOptions: {
+        //     columns: 1,
+        //     marginX: 60,
+        //   },
+        // },
+      ],
+    })
+    const stencilContainer = document.querySelector('#stencil2')
+    stencilContainer?.appendChild(this.stencil.container)
   }
 
   private static initStencil() {
@@ -253,7 +292,16 @@ export default class FlowGraph {
         },
       },
     })
-    this.stencil.load([r1, r2, r3, r4], 'basic')
+
+    const node1 = graph.addNode({
+      x: 40,
+      y: 40,
+      width: 100,
+      height: 40,
+      shape: 'react-shape',
+      component: <BasicTransient text="node111" />,
+    })
+    this.stencil.load([r1, r2, r3, r4, node1], 'basic')
   }
 
   private static initGraphShape() {

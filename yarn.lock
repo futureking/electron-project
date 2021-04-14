@@ -146,6 +146,11 @@
     react-resize-detector "^6.6.4"
     ua-parser-js "^0.7.20"
 
+"@antv/x6-react-shape@^1.3.5":
+  version "1.3.5"
+  resolved "https://registry.npm.taobao.org/@antv/x6-react-shape/download/@antv/x6-react-shape-1.3.5.tgz#c998af9ffe22b41be26931cc6bdd3ba21858ff50"
+  integrity sha1-yZivn/4itBviaTHMa907ohhY/1A=
+
 "@antv/x6@^1.18.1":
   version "1.18.1"
   resolved "https://registry.npm.taobao.org/@antv/x6/download/@antv/x6-1.18.1.tgz#23316d6235f03b09b22c287830ff4af763f6f7fe"

@@ -134,15 +134,15 @@ export const FlowChartRect = Graph.registerNode('flow-chart-rect1', {
       },
     },
     items: [
-      {
-        group: 'top',
-      },
+      // {
+      //   group: 'top',
+      // },
       {
         group: 'right',
       },
-      {
-        group: 'bottom',
-      },
+      // {
+      //   group: 'bottom',
+      // },
       {
         group: 'left',
       },
