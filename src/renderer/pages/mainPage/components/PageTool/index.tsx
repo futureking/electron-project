@@ -2,7 +2,7 @@
 import React from 'react';
 import STYLES from './index.less';
 
-const ToolBar: React.FC = (props: any) => {
+const PageTool: React.FC = (props: any) => {
 
   return(
     <div className={STYLES.wrap}>
@@ -21,4 +21,4 @@ const ToolBar: React.FC = (props: any) => {
   )
 }
 
-export default ToolBar
+export default PageTool

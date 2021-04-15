@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { Graph, Dom, Addon } from '@antv/x6';
 import classnames from 'classnames';
 import Assets from '../Assets';
-import BasicTransient from '@/components/Nodes/BasicTransient';
 import STYLES from './index.less';
 
 const { Dnd } = Addon;

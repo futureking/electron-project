@@ -1,6 +1,6 @@
 import { Graph, Addon, FunctionExt, Shape } from '@antv/x6'
 import '@antv/x6-react-shape'
-import BasicTransient from '../Nodes/BasicTransient';
+import CustomNode from '../Nodes';
 import './shape'
 import graphData from './data'
 
@@ -51,6 +51,7 @@ export default class FlowGraph {
                 },
               },
             },
+            connector: { name: 'smooth' },
             // router: {
             //   name: 'manhattan',
             // },
@@ -124,12 +125,12 @@ export default class FlowGraph {
       target: this.graph,
       stencilGraphWidth: 280,
       search: { rect: true },
-      collapsable: true,
       groups: [
         {
           name: 'basic',
           title: '基础节点',
           graphHeight: 180,
+          collapsable: false
         },
         // {
         //   name: 'combination',
@@ -158,14 +159,16 @@ export default class FlowGraph {
   private static initStencil() {
     this.stencil = new Addon.Stencil({
       target: this.graph,
+      title: 'Drop the items into the builder',
       stencilGraphWidth: 280,
       search: { rect: true },
-      collapsable: true,
+      collapsable: false,
       groups: [
         {
           name: 'basic',
-          title: '基础节点',
+          title: 'Basic',
           graphHeight: 180,
+          collapsable: false,
         },
         // {
         //   name: 'combination',
@@ -192,116 +195,101 @@ export default class FlowGraph {
   }
 
   private static initShape() {
-    const { graph } = this
-    const r1 = graph.createNode({
-      shape: 'flow-chart-rect1',
-      attrs: {
-        body: {
-          rx: 20,
-          ry: 20,
-        },
-        text: {
-          textWrap: {
-            text: '起始节点',
-            fill: '#fff'
-          },
-        },
-        label: {
-          fill: '#fff'
-        }
-      },
-    })
-    const r2 = graph.createNode({
-      shape: 'flow-chart-rect1',
-      attrs: {
-        text: {
-          textWrap: {
-            text: '流程节点',
-          },
-        },
-      },
-    })
-    const r3 = graph.createNode({
-      shape: 'flow-chart-rect1',
-      width: 42,
-      height: 42,
-      angle: 45,
-      attrs: {
-        'edit-text': {
-          style: {
-            transform: 'rotate(-45deg)',
-          },
-        },
-        text: {
-          textWrap: {
-            text: '判断节点',
-          },
-          transform: 'rotate(-45deg)',
-        },
-      },
-      ports: {
-        groups: {
-          top: {
-            position: {
-              name: 'top',
-              args: {
-                dx: 0,
+    const { graph } = this;
+
+    const unitPort = {
+      groups: {
+        right: {
+          position: 'right',
+          attrs: {
+            circle: {
+              r: 3,
+              magnet: true,
+              stroke: '#5F95FF',
+              strokeWidth: 1,
+              fill: '#fff',
+              style: {
+                visibility: 'hidden',
               },
             },
           },
-          right: {
-            position: {
-              name: 'right',
-              args: {
-                dy: 0,
-              },
-            },
-          },
-          bottom: {
-            position: {
-              name: 'bottom',
-              args: {
-                dx: 0,
-              },
-            },
-          },
-          left: {
-            position: {
-              name: 'left',
-              args: {
-                dy: 0,
+        },
+        left: {
+          position: 'left',
+          attrs: {
+            circle: {
+              r: 3,
+              magnet: true,
+              stroke: '#5F95FF',
+              strokeWidth: 1,
+              fill: '#fff',
+              style: {
+                visibility: 'hidden',
               },
             },
           },
         },
       },
-    })
-    const r4 = graph.createNode({
-      shape: 'flow-chart-rect1',
-      width: 50,
-      height: 50,
-      attrs: {
-        body: {
-          rx: 35,
-          ry: 35,
+      items: [
+        {
+          group: 'right',
         },
-        text: {
-          textWrap: {
-            text: '链接节点',
-          },
+        {
+          group: 'left',
         },
-      },
+      ],
+    };
+
+    const TransientNode = graph.createNode({
+      x: 40,
+      y: 40,
+      width: 60,
+      height: 40,
+      shape: 'react-shape',
+      component: <CustomNode text="Transient" imgSrc={require('../Nodes/imgs/bg_transient.svg')} />,
+      ports: unitPort,
     })
 
-    const node1 = graph.addNode({
+    const ContinueNode = graph.createNode({
+      x: 40,
+      y: 40,
+      width: 60,
+      height: 40,
+      shape: 'react-shape',
+      ports: unitPort,
+      component: <CustomNode text="Continues" imgSrc={require('../Nodes/imgs/bg_continues.svg')} />,
+    })
+
+    const GroupNode = graph.createNode({
+      x: 40,
+      y: 40,
+      width: 60,
+      height: 40,
+      shape: 'react-shape',
+      ports: unitPort,
+      component: <CustomNode text="Group" imgSrc={require('../Nodes/imgs/bg_group.svg')} />,
+    })
+
+    const AtoVNode = graph.createNode({
+      x: 40,
+      y: 40,
+      width: 60,
+      height: 40,
+      ports: unitPort,
+      shape: 'react-shape',
+      component: <CustomNode text="A to V" imgSrc={require('../Nodes/imgs/bg_AtoV.svg')} />,
+    })
+
+    const MusicNode = graph.createNode({
       x: 40,
       y: 40,
       width: 100,
       height: 40,
       shape: 'react-shape',
-      component: <BasicTransient text="node111" />,
+      ports: unitPort,
+      component: <CustomNode text="Background Music" imgSrc={require('../Nodes/imgs/bg_bgmusic.svg')} />,
     })
-    this.stencil.load([r1, r2, r3, r4, node1], 'basic')
+    this.stencil.load([TransientNode, ContinueNode, GroupNode, AtoVNode, MusicNode], 'basic')
   }
 
   private static initGraphShape() {

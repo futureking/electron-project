@@ -33,7 +33,7 @@ export default function (props: IProps) {
       cellRef.current = cell
 
       const connector = cell.getConnector() || {
-        name: 'normal',
+        name: 'smooth',
       }
       setAttr('stroke', cell.attr('line/stroke'))
       setAttr('strokeWidth', cell.attr('line/strokeWidth'))

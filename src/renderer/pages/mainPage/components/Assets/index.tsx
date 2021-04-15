@@ -1,7 +1,7 @@
 import React, { useState, useEffect,useLayoutEffect } from 'react';
 import { PlusOutlined } from '@ant-design/icons';
 import { Graph, Dom, Addon } from '@antv/x6';
-import BasicTransient from '@/components/Nodes/BasicTransient';
+import CustomNode from '@/components/Nodes';
 import STYLES from './index.less';
 const { Dnd } = Addon;
 // let container: HTMLDivElement;
@@ -86,7 +86,7 @@ const Assets: React.FC = () => {
       y: 40,
       shape: 'custom-rect',
       label: 'Custom Rectangle',
-      // component: <BasicTransient text="Hello" />,
+      component: <CustomNode text="Hello" imgSrc={''} />,
     })
     newGraph.addEdge({
       source

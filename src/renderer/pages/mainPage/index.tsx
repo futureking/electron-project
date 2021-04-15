@@ -5,8 +5,11 @@ import { Input, Slider } from 'antd';
 import TabList from './components/TabList';
 import FlowGraph from '@/components/Graph';
 // import StreamGraph from './components/StreamGraph';
-import ToolBar from './components/ToolBar';
+import ParamPanel from '@/components/param-panel/param-panel';
+import PageTool from './components/PageTool';
 import ConfigPanel from '@/components/ConfigPanel';
+import SelectorTool from '@/components/display-tools/selector-tool';
+import { Track } from '@/components/track/track';
 import '@antv/x6-react-components/es/split-box/style/index.css';
 
 import STYLES from './index.less';
@@ -45,7 +48,7 @@ const DashBoard: React.FC = () => {
           <TabList />
         </div>
         <div className={STYLES.toolbar}>
-          <ToolBar />
+          <PageTool />
         </div>
       </div>
       <div className={STYLES.content}>
@@ -82,7 +85,7 @@ const DashBoard: React.FC = () => {
                 >
                   <div className={STYLES.area} >
                     <div className={STYLES.panel}>
-                      <div className={STYLES.toolbar}>{isReady && <ToolBar />}</div>
+                      {/* <div className={STYLES.toolbar}>{isReady && <ToolBar />}</div> */}
                       <div id="container" className="x6-graph" />
                     </div>
                     {/* <div className={STYLES.panel}>
@@ -90,15 +93,13 @@ const DashBoard: React.FC = () => {
                     </div> */}
                   </div>
                   <div className={STYLES.area} >
-                    <div className={STYLES.wave}></div>
-                    444
-                    <Input size="large" placeholder="sdfsdf" />
-                    <Slider />
+                    <Track />
+                    <SelectorTool />
                   </div>
                 </SplitBox>
               </div>
               <div className={STYLES.area} >
-                <div className={STYLES.config}>{isReady && <ConfigPanel />}</div>
+                <div className={STYLES.config}>{isReady && <ParamPanel />}</div>
               </div>
             </SplitBox>
           </div>

@@ -2604,6 +2604,11 @@
   resolved "https://registry.yarnpkg.com/@types/unist/-/unist-2.0.3.tgz#9c088679876f374eb5983f150d4787aa6fb32d7e"
   integrity sha512-FvUupuM3rlRsRtCN+fDudtmytGO6iHJuuRKS1Ss0pG5z8oX0diNEw94UEL7hgDbpN94rgaK5R7sWm6RrSkZuAQ==
 
+"@types/uuid@^8.3.0":
+  version "8.3.0"
+  resolved "https://registry.npm.taobao.org/@types/uuid/download/@types/uuid-8.3.0.tgz?cache=0&sync_timestamp=1613385816853&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40types%2Fuuid%2Fdownload%2F%40types%2Fuuid-8.3.0.tgz#215c231dff736d5ba92410e6d602050cce7e273f"
+  integrity sha1-IVwjHf9zbVupJBDm1gIFDM5+Jz8=
+
 "@types/vfile-message@*":
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/@types/vfile-message/-/vfile-message-2.0.0.tgz#690e46af0fdfc1f9faae00cd049cc888957927d5"
@@ -11740,6 +11745,21 @@ ml-matrix@^6.5.0:
   integrity sha1-WgDjB10i/lEGlnglJ+OlNnWG+BU=
   dependencies:
     ml-array-rescale "^1.3.2"
+
+mobx-react-lite@^3.2.0:
+  version "3.2.0"
+  resolved "https://registry.npm.taobao.org/mobx-react-lite/download/mobx-react-lite-3.2.0.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fmobx-react-lite%2Fdownload%2Fmobx-react-lite-3.2.0.tgz#331d7365a6b053378dfe9c087315b4e41c5df69f"
+  integrity sha1-Mx1zZaawUzeN/pwIcxW05Bxd9p8=
+
+mobx-state-tree@^5.0.1:
+  version "5.0.1"
+  resolved "https://registry.npm.taobao.org/mobx-state-tree/download/mobx-state-tree-5.0.1.tgz#d495725fe11075d8fde8f02ab65db6736b44e014"
+  integrity sha1-1JVyX+EQddj96PAqtl22c2tE4BQ=
+
+mobx@^6.2.0:
+  version "6.2.0"
+  resolved "https://registry.npm.taobao.org/mobx/download/mobx-6.2.0.tgz#9a5afe3525a0302691c7805d0df6ef60834d79e5"
+  integrity sha1-mlr+NSWgMCaRx4BdDfbvYINNeeU=
 
 moment@^2.24.0, moment@^2.25.3, moment@^2.29.1:
   version "2.29.1"
