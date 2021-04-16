@@ -4,7 +4,6 @@
   background: @black;
   height: 37px;
   ul{
-    width: 100%;
     display: flex;
     flex-wrap: nowrap;
     padding: 0;
@@ -20,6 +19,16 @@
       width: 18px;
       position: relative;
       top: 4px;
+    }
+  }
+  label {
+    display: inline-block;
+    width: 30px;
+    text-align: center;
+    line-height: 37px;
+    cursor: pointer;
+    &:hover{
+      background: @gray-700;
     }
   }
   .tab {

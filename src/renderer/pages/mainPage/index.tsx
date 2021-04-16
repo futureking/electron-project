@@ -1,21 +1,23 @@
 import React, { useState, useEffect } from 'react';
 import { SplitBox } from '@antv/x6-react-components';
-import { Input, Slider } from 'antd';
-// import Layout from '@/layout';
+import { observer } from 'mobx-react-lite';
 import TabList from './components/TabList';
 import FlowGraph from '@/components/Graph';
 // import StreamGraph from './components/StreamGraph';
 import ParamPanel from '@/components/param-panel/param-panel';
 import PageTool from './components/PageTool';
 import ConfigPanel from '@/components/ConfigPanel';
+import ToolBar from './components/Toolbar';
 import SelectorTool from '@/components/display-tools/selector-tool';
 import { Track } from '@/components/track/track';
+import store from '@/stores';
 import '@antv/x6-react-components/es/split-box/style/index.css';
 
 import STYLES from './index.less';
 
-const DashBoard: React.FC = () => {
-
+const DashBoard: React.FC = observer(() => {
+  // console.info(store)
+  console.info(store.projectStore)
   const [isReady, setIsReady] = useState(false)
 
   const getContainerSize = () => {
@@ -85,7 +87,7 @@ const DashBoard: React.FC = () => {
                 >
                   <div className={STYLES.area} >
                     <div className={STYLES.panel}>
-                      {/* <div className={STYLES.toolbar}>{isReady && <ToolBar />}</div> */}
+                      <div className={STYLES.toolbar}><ToolBar /></div>
                       <div id="container" className="x6-graph" />
                     </div>
                     {/* <div className={STYLES.panel}>
@@ -107,6 +109,6 @@ const DashBoard: React.FC = () => {
       </div>
     </div>
   )
-}
+})
 
 export default DashBoard;

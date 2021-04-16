@@ -44,7 +44,6 @@ const TabList: React.FC = (props: any) => {
 
   return(
     <div className={STYLES.wrap}>
-      {/* <i><img src={require('./imgs/logo.svg')} /></i> */}
       <ul>
         {
           tabList.map(tab => {
@@ -57,12 +56,12 @@ const TabList: React.FC = (props: any) => {
                       [STYLES.active]: tab.id === activeId,
                       [STYLES.unSaved]: tab.isNew
                     })}
-                    onClick={onTabClick}
+                    // onClick={onTabClick}
                   >
                     {tab.title}
                     <span 
                       className={STYLES.closeIcon}
-                      onClick={() =>onCloseTab(tab)}
+                      // onClick={() =>onCloseTab(tab)}
                     >
                       <CloseOutlined style={{fontSize: '12px', marginLeft: '4px'}} />
                     </span>

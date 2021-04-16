@@ -26,7 +26,7 @@ function createWindow() {
       // 官方不建议使用 remote 模块：https://medium.com/@nornagon/electrons-remote-module-considered-harmful-70d69500f31
       enableRemoteModule: false,
       // 存在安全问题：https://www.electronjs.org/docs/tutorial/security#2-do-not-enable-nodejs-integration-for-remote-content
-      nodeIntegration: false,
+      nodeIntegration: true,
       contextIsolation: false,
       preload: path.join(__dirname, './preload.js'),
     },

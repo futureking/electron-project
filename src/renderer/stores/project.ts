@@ -115,6 +115,11 @@ const ProjectStore = types
       self.projects.set(id, { id: id, name: name, type: type });
       return id
     },
+    delProject(id: string) {
+      if (self.projects.has(id)) {
+        self.projects.delete(id)
+      }
+    },
   }))
 
 export { Project, ProjectStore };

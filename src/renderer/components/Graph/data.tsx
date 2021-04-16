@@ -18,13 +18,10 @@ const graphData = {
       attrs: {
         line: {
           stroke: '#5F95FF',
-          strokeWidth: 1,
-          targetMarker: {
-            name: 'classic',
-            size: 8,
-          },
+          strokeWidth: 1
         },
       },
+      target: { x: 200, y: 120 },
       connector: { name: 'smooth' },
       zIndex: 0,
     },
