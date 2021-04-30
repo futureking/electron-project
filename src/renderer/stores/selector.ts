@@ -1,4 +1,3 @@
-import { values } from 'mobx';
 import {types} from 'mobx-state-tree';
 
 const Selector = types

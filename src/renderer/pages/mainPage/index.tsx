@@ -1,25 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import { SplitBox } from '@antv/x6-react-components';
 import { observer } from 'mobx-react-lite';
-import TabList from './components/TabList';
 import FlowGraph from '@/components/Graph';
-// import StreamGraph from './components/StreamGraph';
 import ParamPanel from '@/components/param-panel/param-panel';
 import PageTool from './components/PageTool';
-import ConfigPanel from '@/components/ConfigPanel';
 import ToolBar from './components/Toolbar';
 import SelectorTool from '@/components/display-tools/selector-tool';
 import { Track } from '@/components/track/track';
-import store from '@/stores';
+import AddMusicModal from '@/components/Graph/components/Modal/AddMusic';
 import '@antv/x6-react-components/es/split-box/style/index.css';
 
 import STYLES from './index.less';
+import TabList from './components/TabList';
 
 const DashBoard: React.FC = observer(() => {
-  // console.info(store)
-  console.info(store.projectStore)
-  const [isReady, setIsReady] = useState(false)
-
+  const [isReady, setIsReady] = useState<boolean>(false);
+  // const graph = FlowGraph.init();
+  // console.info(graph);
   const getContainerSize = () => {
     return {
       width: document.body.offsetWidth - 581,
@@ -28,8 +25,8 @@ const DashBoard: React.FC = observer(() => {
   }
 
   useEffect(() => {
-    const graph = FlowGraph.init()
-    setIsReady(true)
+    const graph = FlowGraph.init();
+    setIsReady(true);
 
     const resizeFn = () => {
       const { width, height } = getContainerSize()
@@ -39,7 +36,7 @@ const DashBoard: React.FC = observer(() => {
 
     window.addEventListener('resize', resizeFn)
     return () => {
-      window.removeEventListener('resize', resizeFn)
+      window.removeEventListener('resize', resizeFn)  
     }
   }, [])
 
@@ -90,9 +87,6 @@ const DashBoard: React.FC = observer(() => {
                       <div className={STYLES.toolbar}><ToolBar /></div>
                       <div id="container" className="x6-graph" />
                     </div>
-                    {/* <div className={STYLES.panel}>
-                      <div id="container" className="x6-graph" />
-                    </div> */}
                   </div>
                   <div className={STYLES.area} >
                     <Track />
@@ -106,6 +100,9 @@ const DashBoard: React.FC = observer(() => {
             </SplitBox>
           </div>
         </SplitBox>
+      </div>
+      <div>
+        <AddMusicModal />
       </div>
     </div>
   )

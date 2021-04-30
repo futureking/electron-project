@@ -1,12 +1,10 @@
-import React, { useState, useEffect,useLayoutEffect } from 'react';
+import React, { useLayoutEffect } from 'react';
 import { PlusOutlined } from '@ant-design/icons';
-import { Graph, Dom, Addon } from '@antv/x6';
+import { Graph } from '@antv/x6';
 import CustomNode from '@/components/Nodes';
 import STYLES from './index.less';
-const { Dnd } = Addon;
 // let container: HTMLDivElement;
 let graph: Graph;
-let dnd: any;
 
 const Title = ({title, hasRight=false}) => {
   return(

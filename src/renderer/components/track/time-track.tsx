@@ -14,7 +14,7 @@ const XOFFSET = 16;
 
 function TimeTrack(props: TimeTrackProps) {
   const { ppms, factor, total } = props;
-  const [divider, setDivider] = useState(1000);
+  const [divider] = useState(1000);
   const path = (i:number) => {
       let x = i * ppms * factor + XOFFSET;
       return "M" + x + ", 0V"+ MAIN;

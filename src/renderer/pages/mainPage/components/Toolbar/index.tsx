@@ -3,9 +3,6 @@ import { Toolbar } from '@antv/x6-react-components'
 import FlowGraph from '@/components/Graph'
 import { DataUri } from '@antv/x6'
 import {
-  ClearOutlined,
-  SaveOutlined,
-  PrinterOutlined,
   UndoOutlined,
   RedoOutlined,
   CopyOutlined,
@@ -51,7 +48,7 @@ export default function () {
 
   useEffect(() => {
     const graph = FlowGraph.init();
-    console.info(graph);
+    // console.info(graph);
     const { history } = graph
     setCanUndo(history.canUndo())
     setCanRedo(history.canRedo())

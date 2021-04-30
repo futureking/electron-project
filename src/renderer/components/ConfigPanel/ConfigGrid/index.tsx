@@ -31,13 +31,13 @@ interface IProps {
   setAttr: (key: string, value: any) => void
 }
 
-const tryToJSON = (val: string) => {
-  try {
-    return JSON.parse(val)
-  } catch (error) {
-    return val
-  }
-}
+// const tryToJSON = (val: string) => {
+//   try {
+//     return JSON.parse(val)
+//   } catch (error) {
+//     return val
+//   }
+// }
 
 export default function (props: IProps) {
   const { attrs, setAttr } = props

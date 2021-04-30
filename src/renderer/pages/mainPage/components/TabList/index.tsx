@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import classnames from 'classnames';
-import { values } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import { Tooltip } from 'antd';
 import { CloseOutlined, PlusOutlined } from '@ant-design/icons';
-import { randomUuid } from '@/utils/utils';
+import CustomMenu from '@/components/menu';
 import store from '@/stores';
 import STYLES from './index.less';
+
 
 interface InitData {
   id: number,
@@ -36,13 +36,13 @@ console.info(initData);
 
 
 const TabList: React.FC = observer((props: any) => {
-  console.info(store)
+  //console.info(store)
   const STORE = store.projectStore;
-  console.info(STORE)
+  //console.info(STORE)
 
   const { activeId=111 } = props;
-  const [tabList, setTabList] = useState(initData);
   const [proNum, setProNum] = useState(1);
+  const [menuVisible, setMenuVisible] = useState(false);
 
   const onTabClick = (tab) => {
     store.selection.setSelection("", tab.id);
@@ -53,44 +53,45 @@ const TabList: React.FC = observer((props: any) => {
   }
 
   const onCreateProject = () => {
-   let id =  STORE.addProject('项目'+proNum, 'Basic');
-  store.selection.setSelection("", id);
-  setProNum(proNum+1);
+    let id = STORE.addProject('项目' + proNum, 'Basic');
+    store.selection.setSelection("", id);
+    setProNum(proNum + 1);
   }
 
+  const elemP: Array<any> = new Array<any>();
+  store.projectStore.projects.forEach((project) => {
+    elemP.push(<Tooltip title={project.name} key={project.id}>
+      <li className={STYLES.tab}>
+        <a
+          className={classnames(STYLES.link, {
+            [STYLES.active]: project.id === activeId,
+            [STYLES.unSaved]: false,
+          })}
+          onClick={() => onTabClick(project)}
+        >
+          {project.name}
+          <span
+            className={STYLES.closeIcon}
+            onClick={() => onCloseTab(project)}
+          >
+            <CloseOutlined style={{ fontSize: '12px', marginLeft: '4px' }} />
+          </span>
+          {false &&
+            <span className={STYLES.unSavedIcon}></span>
+          }
+        </a>
+      </li>
+    </Tooltip>);
+  })
+  
   return(
     <div className={STYLES.wrap}>
-      <i><img src={require('./imgs/logo.svg')} /></i>
+        <i onClick={() => setMenuVisible(!menuVisible)}>
+          <img src={require('./imgs/logo.svg')} />
+        </i>
+        <CustomMenu visible={menuVisible} />
       <ul>
-        { 
-          values(STORE.projects).map(tab => {
-            return (
-              <Tooltip title={tab.name} key={tab.id}>
-                <li className={STYLES.tab}>
-                  <a 
-                    // href="#"
-                    className={classnames(STYLES.link, {
-                      [STYLES.active]: tab.id === activeId,
-                      [STYLES.unSaved]: tab.isNew
-                    })}
-                    onClick={() => onTabClick(tab)}
-                  >
-                    {tab.name}
-                    <span 
-                      className={STYLES.closeIcon}
-                      onClick={() =>onCloseTab(tab)}
-                    >
-                      <CloseOutlined style={{fontSize: '12px', marginLeft: '4px'}} />
-                    </span>
-                    { tab.isNew && 
-                      <span className={STYLES.unSavedIcon}></span>
-                    }
-                  </a>
-                </li>
-              </Tooltip>
-            )
-              })
-            }
+        {elemP}
       </ul>
       <label onClick={onCreateProject}><PlusOutlined /></label>
     </div>

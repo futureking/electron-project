@@ -1,17 +1,16 @@
-import { Graph, Addon, FunctionExt, Shape } from '@antv/x6'
+import React from 'react';
+import { Graph, Edge, EdgeView, Addon, FunctionExt, Shape } from '@antv/x6'
 import '@antv/x6-react-shape'
+// import AddMusicModal from './components/Modal/AddMusic';
 import CustomNode from '../Nodes';
-import './shape'
-import graphData from './data'
-
-export default class FlowGraph {
+export default class FlowGraph  {
   public static graph: Graph
   private static stencil: Addon.Stencil
 
   public static init() {
     this.graph = new Graph({
       container: document.getElementById('container')!,
-      autoResize: true,
+      autoResize: true,  //是否自动扩充/缩小画布，默认为 true
       //滚动画布
       scroller: {
         // enabled: true,
@@ -19,27 +18,43 @@ export default class FlowGraph {
         pageVisible: false,  //是否分页
         pageBreak: false,   //是否显示分页符
       },
+      //滚轮的默认行为，避免与scroller冲突
       mousewheel: {
         enabled: true,
-        modifiers: ['ctrl', 'meta'],
+        modifiers: ['ctrl', 'meta'],  //结合快捷键触发画布缩放
       },
       //点选、框选
       selecting: {
-        enabled: true,
-        multiple: true,
-        rubberband: true,
-        movable: true,
+        enabled: true,         //启用框选 
+        multiple: true,       //是否启用点击多选
+        // rubberband: true, //是否启用框选
+        movable: true,       //选中的节点可否移动
         showNodeSelectionBox: true,
-        filter: ['groupNode'],
+        filter: ['groupNode'],   //节点过滤器
       },
       //连线选项
       connecting: {
         anchor: 'center',
         connectionPoint: 'anchor',
-        allowBlank: false,
+        allowBlank: false, //是否允许连接到画布空白位置的点
         highlight: true,
-        snap: true,
-        createEdge() {
+        snap: true,  //当 snap 设置为 true 时连线的过程中距离节点或者连接桩 50px 时会触发自动吸附，可以通过配置 radius 属性自定义触发吸附的距离
+        validateMagnet({ cell, magnet }) {
+          let count = 0
+          const connectionCount = magnet.getAttribute('connection-count')
+          const max = connectionCount ? parseInt(connectionCount, 10) : Number.MAX_SAFE_INTEGER
+          const outgoingEdges = this.getOutgoingEdges(cell)
+          if (outgoingEdges) {
+            outgoingEdges.forEach((edge: Edge) => {
+              const edgeView = this.findViewByCell(edge) as EdgeView
+              if (edgeView.sourceMagnet === magnet) {
+                count += 1
+              }
+            })
+          }
+          return count < max
+        },
+        createEdge() {  //连接的过程中创建新的边
           return new Shape.Edge({
             attrs: {
               line: {
@@ -47,14 +62,11 @@ export default class FlowGraph {
                 strokeWidth: 1,
                 targetMarker: {
                   name: 'classic',
-                  size: 8,
+                  size: 6,
                 },
               },
             },
             connector: { name: 'smooth' },
-            // router: {
-            //   name: 'manhattan',
-            // },
             zIndex: 0,
           })
         },
@@ -120,43 +132,8 @@ export default class FlowGraph {
     return this.graph
   }
 
-  private static initStencil2() {
-    this.stencil = new Addon.Stencil({
-      target: this.graph,
-      stencilGraphWidth: 280,
-      search: { rect: true },
-      groups: [
-        {
-          name: 'basic',
-          title: '基础节点',
-          graphHeight: 180,
-          collapsable: false
-        },
-        // {
-        //   name: 'combination',
-        //   title: '组合节点',
-        //   layoutOptions: {
-        //     columns: 1,
-        //     marginX: 60,
-        //   },
-        //   graphHeight: 260,
-        // },
-        // {
-        //   name: 'group',
-        //   title: '节点组',
-        //   graphHeight: 100,
-        //   layoutOptions: {
-        //     columns: 1,
-        //     marginX: 60,
-        //   },
-        // },
-      ],
-    })
-    const stencilContainer = document.querySelector('#stencil2')
-    stencilContainer?.appendChild(this.stencil.container)
-  }
 
-  private static initStencil() {
+  public static initStencil() {
     this.stencil = new Addon.Stencil({
       target: this.graph,
       title: 'Drop the items into the builder',
@@ -169,32 +146,14 @@ export default class FlowGraph {
           title: 'Basic',
           graphHeight: 180,
           collapsable: false,
-        },
-        // {
-        //   name: 'combination',
-        //   title: '组合节点',
-        //   layoutOptions: {
-        //     columns: 1,
-        //     marginX: 60,
-        //   },
-        //   graphHeight: 260,
-        // },
-        // {
-        //   name: 'group',
-        //   title: '节点组',
-        //   graphHeight: 100,
-        //   layoutOptions: {
-        //     columns: 1,
-        //     marginX: 60,
-        //   },
-        // },
-      ],
+        }
+      ]
     })
     const stencilContainer = document.querySelector('#stencil')
     stencilContainer?.appendChild(this.stencil.container)
   }
 
-  private static initShape() {
+  public static initShape() {
     const { graph } = this;
 
     const unitPort = {
@@ -211,6 +170,7 @@ export default class FlowGraph {
               style: {
                 visibility: 'hidden',
               },
+              connectionCount: 2
             },
           },
         },
@@ -226,6 +186,7 @@ export default class FlowGraph {
               style: {
                 visibility: 'hidden',
               },
+              connectionCount: 0
             },
           },
         },
@@ -246,8 +207,9 @@ export default class FlowGraph {
       width: 60,
       height: 40,
       shape: 'react-shape',
-      component: <CustomNode text="Transient" imgSrc={require('../Nodes/imgs/bg_transient.svg')} />,
       ports: unitPort,
+      type: 'Transient',
+      component: <CustomNode text="Transient" imgSrc={require('../Nodes/imgs/bg_transient.svg')} />,
     })
 
     const ContinueNode = graph.createNode({
@@ -257,6 +219,7 @@ export default class FlowGraph {
       height: 40,
       shape: 'react-shape',
       ports: unitPort,
+      type: 'Continue',
       component: <CustomNode text="Continues" imgSrc={require('../Nodes/imgs/bg_continues.svg')} />,
     })
 
@@ -267,6 +230,7 @@ export default class FlowGraph {
       height: 40,
       shape: 'react-shape',
       ports: unitPort,
+      type: 'Group',
       component: <CustomNode text="Group" imgSrc={require('../Nodes/imgs/bg_group.svg')} />,
     })
 
@@ -277,6 +241,7 @@ export default class FlowGraph {
       height: 40,
       ports: unitPort,
       shape: 'react-shape',
+      type: 'AtoV',
       component: <CustomNode text="A to V" imgSrc={require('../Nodes/imgs/bg_AtoV.svg')} />,
     })
 
@@ -287,26 +252,41 @@ export default class FlowGraph {
       height: 40,
       shape: 'react-shape',
       ports: unitPort,
+      type: 'Music',
+      event: 'graph:editCode',
       component: <CustomNode text="Background Music" imgSrc={require('../Nodes/imgs/bg_bgmusic.svg')} />,
     })
     this.stencil.load([TransientNode, ContinueNode, GroupNode, AtoVNode, MusicNode], 'basic')
   }
 
-  private static initGraphShape() {
-    this.graph.fromJSON(graphData as any)
+  public static initGraphShape() {
+    // const graphData = X6DataFormart();
+    // console.info(data)
+    // this.graph.fromJSON(graphData)
   }
 
-  private static showPorts(ports: NodeListOf<SVGAElement>, show: boolean) {
+  public static showPorts(ports: NodeListOf<SVGAElement>, show: boolean) {
     for (let i = 0, len = ports.length; i < len; i = i + 1) {
       ports[i].style.visibility = show ? 'visible' : 'hidden'
     }
   }
 
-  private static initEvent() {
+  public static initEvent() {
     const { graph } = this
-    const container = document.getElementById('container')!
+    const container = document.getElementById('container')!;
+
+    graph.on('node:added', ({ node, index, options }) => {
+      console.info('node:added', node, index, options);
+      const data = node.getProp();
+      console.info(data)
+      if(data.type === 'Music') {
+        // return <AddMusicModal visible={true} flowChart={graph} />
+        graph.trigger('graph:editCode');
+      }
+    });
 
     graph.on('node:contextmenu', ({ cell, view }) => {
+      console.info('clicked node:contextmenu');
       const oldText = cell.attr('text/textWrap/text') as string
       const elem = view.container.querySelector('.x6-edit-text') as HTMLElement
       if (elem == null) { return }
@@ -338,6 +318,14 @@ export default class FlowGraph {
       }),
       500,
     )
+    graph.on(
+      'node:mouseenter',() => {
+        const ports = container.querySelectorAll(
+          '.x6-port-body',
+        ) as NodeListOf<SVGAElement>
+        this.showPorts(ports, true)
+      }
+    )
     graph.on('node:mouseleave', () => {
       const ports = container.querySelectorAll(
         '.x6-port-body',
@@ -346,6 +334,7 @@ export default class FlowGraph {
     })
 
     graph.on('node:collapse', ({ node, e }) => {
+      console.info('clicked node:collapse');
       e.stopPropagation()
       node.toggleCollapse()
       const collapsed = node.isCollapsed()
@@ -360,12 +349,18 @@ export default class FlowGraph {
     })
 
     graph.on('node:embedded', ({ cell }) => {
+      console.info('clicked node:embedded');
       if (cell.shape !== 'groupNode') {
         cell.toFront()
       }
     })
 
+    graph.on('node:dblclick', ({e, x, y, node, view}) => {
+      console.info(e, x, y, node, view)
+    })
+
     graph.bindKey('backspace', () => {
+      console.info('clicked backspace');
       const cells = graph.getSelectedCells()
       if (cells.length) {
         graph.removeCells(cells)
@@ -373,3 +368,4 @@ export default class FlowGraph {
     })
   }
 }
+

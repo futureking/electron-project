@@ -1,103 +1,112 @@
 {
-  "name": "electron-pro",
-  "version": "1.0.0",
-  "description": "Electron template with Umi and TypeScript.",
-  "private": true,
-  "build": {
-    "files": [
-      "!node_modules/"
-    ],
-    "mac": {
-      "category": "your.app.category.type"
+    "name": "electron-pro",
+    "version": "1.0.0",
+    "description": "Tool for haptics.",
+    "main": "./dist/main/main.js",
+    "author": {
+        "name": "AAC Technologies",
+        "url": "https://www.aactechnologies.com/"
     },
-    "directories": {
-      "output": "release"
+    "private": true,
+    "build": {
+        "productName": "electron-pro",
+        "files": [
+            "!node_modules/"
+        ],
+        "directories": {
+            "output": "release"
+        },
+        "appId": "com.appaac.richtap-creator-pro",
+        "asar": false,
+        "nsis": {
+            "oneClick": false,
+            "perMachine": true,
+            "allowElevation": true,
+            "allowToChangeInstallationDirectory": true,
+            "deleteAppDataOnUninstall": true
+        }
     },
-    "appId": "com.theprimone.electron-pro",
-    "asar": false
-  },
-  "scripts": {
-    "start": "concurrently \"yarn start:renderer\" \"yarn start:main\"",
-    "start:main": "nodemon --exec \"electron-webpack dev\"",
-    "start:renderer": "cross-env BROWSER=none APP_ROOT=src/renderer umi dev",
-    "build-main-dev": "cross-env NODE_ENV=development webpack",
-    "build-main-prod": "cross-env NODE_ENV=production webpack",
-    "build:renderer": "cross-env APP_ROOT=src/renderer umi build",
-    "watch": "tsc -w",
-    "test": "jest",
-    "lint": "tslint -c tslint.json -p tsconfig.json",
-    "debug:main": "electron --inspect=5858 -w ./dist/main/main.js",
-    "pack": "yarn build:renderer && yarn build-main-prod && electron-builder --dir",
-    "dist": "electron-builder",
-    "dist-mac": "electron-builder -m",
-    "dist-win": "electron-builder -w",
-    "dist-linux": "electron-builder -l",
-    "dist-all": "electron-builder -mwl",
-    "prettier": "prettier --list-different \"./**/*.{ts,tsx,js,jsx,less,scss}\"",
-    "postinstall": "electron-builder install-app-deps"
-  },
-  "repository": "https://github.com/wangtianlun/umi-electron-typescript",
-  "keywords": [
-    "Electron",
-    "Umi",
-    "TypeScript"
-  ],
-  "author": {
-    "name": "theprimone",
-    "email": "yuns.xie@qq.com",
-    "url": "https://github.com/theprimone"
-  },
-  "dependencies": {
-    "@antv/dom-util": "^2.0.3",
-    "@antv/layout": "^0.1.12",
-    "@antv/util": "^2.0.13",
-    "@antv/x6": "^1.18.1",
-    "@antv/x6-react-components": "^1.1.7",
-    "@antv/x6-react-shape": "^1.3.5",
-    "@types/uuid": "^8.3.0",
-    "ahooks": "^2.10.0",
-    "lodash": "^4.17.21",
-    "mobx": "^6.2.0",
-    "mobx-react-lite": "^3.2.0",
-    "mobx-state-tree": "^5.0.1",
-    "react-transition-group": "^4.4.1",
-    "react-use": "^17.2.1",
-    "umi": "^3.3.9",
-    "unstated-next": "^1.1.0"
-  },
-  "devDependencies": {
-    "@types/react-transition-group": "^4.4.0",
-    "@umijs/fabric": "^2.5.6",
-    "@umijs/hooks": "^1.9.3",
-    "@umijs/preset-react": "^1.7.13",
-    "concurrently": "^6.0.0",
-    "cross-env": "^7.0.2",
-    "electron": "^11.2.1",
-    "electron-builder": "^22.9.1",
-    "electron-debug": "^3.2.0",
-    "electron-webpack": "^2.8.2",
-    "electron-webpack-ts": "^4.0.1",
-    "jest": "^24.9.0",
-    "nodemon": "^2.0.7",
-    "prettier": "^2.2.1",
-    "ts-loader": "^8.0.14",
-    "tslint": "^5.10.0",
-    "typescript": "^4.1.3",
-    "webpack": "4.28.0",
-    "webpack-cli": "^3.2.1",
-    "webpack-merge": "^4.2.1"
-  },
-  "electronWebpack": {
-    "main": {
-      "extraEntries": [
-        "@/preload.js"
-      ],
-      "sourceDirectory": "src/main",
-      "webpackConfig": "webpack.config.js"
+    "scripts": {
+        "start": "concurrently \"yarn start:renderer\" \"yarn start:main\"",
+        "start:main": "nodemon --exec \"electron-webpack dev\"",
+        "start:renderer": "cross-env BROWSER=none APP_ROOT=src/renderer umi dev",
+        "build-main-dev": "cross-env NODE_ENV=development webpack",
+        "build-main-prod": "cross-env NODE_ENV=production webpack",
+        "build:renderer": "cross-env APP_ROOT=src/renderer umi build",
+        "watch": "tsc -w",
+        "test": "jest",
+        "lint": "tslint -c tslint.json -p tsconfig.json",
+        "debug:main": "electron --inspect=5858 -w ./dist/main/main.js",
+        "pack": "yarn build:renderer && yarn build-main-prod && electron-builder --dir",
+        "dist": "electron-builder",
+        "dist-mac": "electron-builder -m",
+        "dist-win": "electron-builder -w",
+        "dist-linux": "electron-builder -l",
+        "dist-all": "electron-builder -mwl",
+        "prettier": "prettier --list-different \"./**/*.{ts,tsx,js,jsx,less,scss}\"",
+        "postinstall": "electron-builder install-app-deps"
     },
-    "renderer": {
-      "sourceDirectory": null
-    }
-  },
-  "__npminstall_done": false
+    "dependencies": {
+        "@antv/dom-util": "^2.0.3",
+        "@antv/layout": "^0.1.12",
+        "@antv/util": "^2.0.13",
+        "@antv/x6": "^1.18.1",
+        "@antv/x6-react-components": "^1.1.7",
+        "@antv/x6-react-shape": "^1.3.5",
+        "@types/uuid": "^8.3.0",
+        "ahooks": "^2.10.0",
+        "bufferutil": "^4.0.3",
+        "express": "^4.17.1",
+        "internal-ip": "^6.2.0",
+        "lodash": "^4.17.21",
+        "lowdb": "^1.0.0",
+        "mobx": "^6.2.0",
+        "mobx-react-lite": "^3.2.0",
+        "mobx-state-tree": "^5.0.1",
+        "mst-middlewares": "^5.0.1",
+        "qrcode.react": "^1.0.1",
+        "react-split-pane": "^2.0.3",
+        "react-transition-group": "^4.4.1",
+        "react-use": "^17.2.1",
+        "socket.io": "^4.0.1",
+        "umi": "^3.3.9",
+        "unstated-next": "^1.1.0",
+        "utf-8-validate": "^5.0.4"
+    },
+    "devDependencies": {
+        "@types/react-transition-group": "^4.4.0",
+        "@umijs/fabric": "^2.5.6",
+        "@umijs/hooks": "^1.9.3",
+        "@umijs/preset-react": "^1.7.13",
+        "concurrently": "^6.0.0",
+        "cross-env": "^7.0.2",
+        "electron": "^11.2.1",
+        "electron-builder": "^22.9.1",
+        "electron-debug": "^3.2.0",
+        "electron-webpack": "^2.8.2",
+        "electron-webpack-ts": "^4.0.1",
+        "jest": "^24.9.0",
+        "nodemon": "^2.0.7",
+        "prettier": "^2.2.1",
+        "qrcode.react": "^1.0.1",
+        "ts-loader": "^8.0.14",
+        "tslint": "^5.10.0",
+        "typescript": "^4.1.3",
+        "webpack": "4.28.0",
+        "webpack-cli": "^3.2.1",
+        "webpack-merge": "^4.2.1"
+    },
+    "electronWebpack": {
+        "main": {
+            "extraEntries": [
+                "@/preload.js"
+            ],
+            "sourceDirectory": "src/main",
+            "webpackConfig": "webpack.config.js"
+        },
+        "renderer": {
+            "sourceDirectory": null
+        }
+    },
+    "__npminstall_done": false
 }

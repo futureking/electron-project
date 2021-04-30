@@ -1,0 +1,176 @@
+[
+    {
+      "id": "2d797c87-3780-4278-86c3-a4dda00f6f71",
+      "x": 100,
+      "y": 100,
+      "width": 80,
+      "height": 40,
+      "label": "Transient",
+      "shape": "rect",
+      "attrs": {
+          "body": {
+            "fill": "#36AFD2",
+            "rx": "4px",
+            "ry": "4px"
+          },
+          "label": {
+            "size": 10
+          }
+      },
+      "ports": [
+          {
+              "position": "left",
+              "label": {
+                  "position": "left"
+              },
+              "attrs": {
+                  "circle": {
+                      "r": 6,
+                      "magnet": true
+                  }
+              }
+          }
+      ]
+    },
+    {
+        "id": "2d797c87-3780-4278-86c3-a4dda00f6f72",
+        "x": 400,
+        "y": 100,
+        "width": 80,
+        "height": 40,
+        "label": "Transient",
+        "shape": "rect",
+        "attrs": {
+            "body": {
+              "fill": "#36AFD2",
+              "rx": "4px",
+              "ry": "4px"
+            },
+            "label": {
+              "size": 10
+            }
+        },
+        "ports": [
+            {
+                "position": "left",
+                "label": {
+                    "position": "left"
+                },
+                "attrs": {
+                    "circle": {
+                        "r": 6,
+                        "magnet": true
+                    }
+                }
+            }
+        ]
+    },
+    {
+      "id": "df1bba63-cc35-42a7-bfa3-12be2f7cad84",
+      "x": 250,
+      "y": 100,
+      "width": 80,
+      "height": 40,
+      "label": "Continuous",
+      "shape": "rect",
+      "attrs": {
+            "body": {
+                "fill": "#D5C854",
+                "rx": "4px",
+                "ry": "4px"
+            }
+        },
+        "ports": [
+            {
+                "position": "left",
+                "label": {
+                    "position": "left"
+                },
+                "attrs": {
+                    "circle": {
+                        "r": 6,
+                        "magnet": true
+                    }
+                }
+            }
+        ]
+    },
+    {
+        "id": "df1bba63-cc35-42a7-bfa3-12be2f7cad85",
+        "x": 550,
+        "y": 100,
+        "width": 80,
+        "height": 40,
+        "label": "Continuous",
+        "shape": "rect",
+        "attrs": {
+              "body": {
+                  "fill": "#D5C854",
+                  "rx": "4px",
+                  "ry": "4px"
+              }
+          },
+          "ports": [
+              {
+                  "position": "left",
+                  "label": {
+                      "position": "left"
+                  },
+                  "attrs": {
+                      "circle": {
+                          "r": 6,
+                          "magnet": true
+                      }
+                  }
+              }
+          ]
+    },
+    {
+      "id": "edge1",
+      "source": "2d797c87-3780-4278-86c3-a4dda00f6f71",
+      "target": "df1bba63-cc35-42a7-bfa3-12be2f7cad84",
+      "shape": "edge",
+      "attrs": {
+          "line": {
+              "stroke": "#5f95ff",
+              "strokeWidth": 1
+          }
+      },
+      "connector": {
+          "name": "smooth"
+      },
+      "zIndex": 0
+    },
+    {
+      "id": "edge2",
+      "target": "2d797c87-3780-4278-86c3-a4dda00f6f72",
+      "source": "df1bba63-cc35-42a7-bfa3-12be2f7cad84",
+      "shape": "edge",
+      "attrs": {
+          "line": {
+              "stroke": "#5f95ff",
+              "strokeWidth": 1
+          }
+      },
+      "connector": {
+          "name": "smooth"
+      },
+      "zIndex": 0
+    },
+    {
+      "id": "edge3",
+      "target": "2d797c87-3780-4278-86c3-a4dda00f6f72",
+      "source": "df1bba63-cc35-42a7-bfa3-12be2f7cad85",
+      "shape": "edge",
+      "attrs": {
+          "line": {
+              "stroke": "#5f95ff",
+              "strokeWidth": 1
+          }
+      },
+      "connector": {
+          "name": "smooth"
+      },
+      "zIndex": 0
+    }
+]

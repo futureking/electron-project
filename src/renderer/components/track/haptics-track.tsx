@@ -2,8 +2,7 @@ import { observer } from "mobx-react-lite";
 import style from './haptics-track.less';
 import store from '@/stores';
 import { timeToX, intensToY, intensToH, timeToWidth } from "@/utils/draw-utils";
-import React, { Fragment } from 'react';
-import { keys, values } from "mobx";
+import React from 'react';
 
 interface HapticsTrackProps {
   ppms: number;

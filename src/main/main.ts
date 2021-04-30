@@ -1,25 +1,30 @@
-import * as path from 'path';
 import { format, pathToFileURL } from 'url';
-import { app, BrowserWindow, ipcMain } from 'electron';
-import debug from 'electron-debug';
+import { app, BrowserWindow, ipcMain, Menu } from 'electron';
 
-import { author } from '../../package.json';
-import setApplicationMenu from './utils/menu';
 import { oneKeyInput } from './utils/key';
-
-global.author = `${author.name} <${author.url}>`;
+import { exportHe, importHe } from './files/he';
+import * as MSG from '../share/define/message';
+import { openProject, saveProject } from './files/project';
+import { v4 } from 'internal-ip'
+import { createServer } from 'http';
+import { Server, Socket } from 'socket.io';
+import { RegisterProps } from './utils/server';
+import express from 'express';
+import path from 'path';
+import { stat, readFile } from 'fs'
 
 let win: Electron.BrowserWindow | null;
+let io: Server| null;
+let socketID: string = '';
 
-debug();
 function createWindow() {
   win = new BrowserWindow({
-    width: 1140,
-    height: 600,
+    width: 1110,
+    height: 824,
     // transparent: true,
     // frame: false,
     backgroundColor: '#000',
-    
+
     webPreferences: {
       // about remote: https://www.electronjs.org/docs/api/remote#remote
       // enableRemoteModule break change: https://www.electronjs.org/docs/breaking-changes#default-changed-enableremotemodule-defaults-to-false
@@ -32,8 +37,24 @@ function createWindow() {
     },
   });
 
-  setApplicationMenu();
+  Menu.setApplicationMenu(null);
 
+  const httpServer = createServer(express());
+  io = new Server(httpServer);
+  httpServer.listen(3000);
+  io!.on('connection', (socket: Socket) => {
+    socket.on('register', (data) => {
+      let props = JSON.parse(data) as RegisterProps;
+      socketID = socket.id;
+      win!.webContents.send(MSG.CONNECT, props.name);
+    })
+    socket.on("disconnecting", (reason) => {
+      console.log(`${socket.id} disconnected`);
+      socketID = '';
+      win!.webContents.send(MSG.DISCONNECT, reason);
+    });
+
+  })
   if (process.env.NODE_ENV === 'development') {
     win.loadURL('http://localhost:8000/#/');
     win.webContents.openDevTools();
@@ -47,10 +68,10 @@ function createWindow() {
    */
   win.webContents.on('before-input-event', (_, input) => {
     if (oneKeyInput(input, 'f12')) {
-      win?.webContents.toggleDevTools();
+      win!.webContents.toggleDevTools();
     }
     if (oneKeyInput(input, 'f5')) {
-      win?.webContents.reload();
+      win!.webContents.reload();
     }
   });
 
@@ -76,3 +97,84 @@ app.on('activate', () => {
 ipcMain.handle('getGlobal', async (_, ...names) => {
   return names.map((item) => global[item]);
 });
+
+ipcMain.on(MSG.PAGE_CHG_DASHBORDER, () => {
+  win!.setSize(1440, 1080);
+  win!.center();
+  // setApplicationMenu();
+});
+
+ipcMain.handle(MSG.IMPORT_HE, async (event) => {
+  const result = await importHe();
+  return result;
+});
+
+ipcMain.on(MSG.EXPORT_HE, (event, data) => {
+  exportHe(data);
+});
+
+ipcMain.handle(MSG.OPEN_PROJ, async (event) => {
+  const result = await openProject();
+  return result;
+});
+
+ipcMain.handle(MSG.SAVE_PROJ, async(event, name, url, data) => {
+  const result = saveProject(name, url, data);
+  return result;
+});
+
+ipcMain.handle(MSG.GET_IP, async(event) => {
+  const result = await v4();
+  return result;
+});
+
+ipcMain.on(MSG.TRANSMIT, (event, audio, stream) => {
+  console.log(audio);
+  console.log(stream);
+  if (socketID === '' || !io?.sockets.sockets.has(socketID)) {
+    win!.webContents.send(MSG.TRANSMIT, false, 'unregistered');
+  }
+  else {
+    let socket: Socket = io?.sockets.sockets.get(socketID)!;
+    socket.emit('transmit-he', stream);
+    socket.on('transmit-he', (res1) => {
+      if (!res1)
+        win!.webContents.send(MSG.TRANSMIT, false, 'he error');
+      else {
+        if (audio !== '') {
+          try {
+            stat(audio, (err, stat) => {
+              if (err)
+                throw err;
+              if (!stat.isFile()) {
+                win!.webContents.send(MSG.TRANSMIT, false, 'audio url error');
+              }
+              else {
+                readFile(audio, (err, data) => {
+                  if (err)
+                    throw err;
+                  socket.emit('transmit-audio', data);
+                  socket.on('transmit-audio', (res2) => {
+                    if (!res2)
+                      win!.webContents.send(MSG.TRANSMIT, false, 'music error');
+                    else {
+                      socket.emit('play');
+                      win!.webContents.send(MSG.TRANSMIT, true, 'play he with audio');
+                    }
+                  })
+                });
+              }
+            });
+          }
+          catch (err) {
+            win!.webContents.send(MSG.TRANSMIT, false, 'audio error');
+          }
+        }
+        else {
+          socket.emit('play');          
+          win!.webContents.send(MSG.TRANSMIT, true, 'play he');
+        }
+      }
+    })
+  }
+})

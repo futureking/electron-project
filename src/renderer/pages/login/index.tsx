@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from 'umi';
 import { Button, Input } from 'antd';
 import STYLES from './index.less';
 
@@ -21,26 +22,22 @@ const  Login = () => {
       <div className={STYLES.right}>
         <ul>
           <li>
-            <h4>Create an account</h4>
-            <span>Sign up to continue</span>
+            <h4>Welcome</h4>
+            <span>Sign in to continue</span>
           </li>
           <li>
-            <label>NAME</label>
+            <label>USERNAME</label>
             <Input placeholder="please input your name~" />
-          </li>
-          <li>
-            <label>EMAIL</label>
-            <Input placeholder="please input your EMAIL~" />
           </li>
           <li>
             <label>PASSWORd</label>
             <Input.Password placeholder="please input your PASSWORD~" />
           </li>
           <li>
-            <Button type="primary" size="large" block>Create an account</Button>
+            <Link to="/mainPage"><Button type="primary" size="large" block>Sign in</Button></Link>
           </li>
           <li>
-            <Button size="large" block>Aready have an account? Login</Button>
+            <Button size="large" block>Create an account</Button>
           </li>
         </ul>
       </div>

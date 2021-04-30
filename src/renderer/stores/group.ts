@@ -1,6 +1,5 @@
-import { randomUuid, timeAtMin, timeAtMSec, timeAtSec } from '@/utils/utils';
-import { values } from 'mobx';
-import {getParent, getParentOfType, types} from 'mobx-state-tree';
+import { timeAtMin, timeAtMSec, timeAtSec } from '@/utils/utils';
+import {types} from 'mobx-state-tree';
 import { Event } from './events';
 const Group = types
 .model({
@@ -16,7 +15,6 @@ const Group = types
   get validEvents() {
     return self.events.filter(event => event.relativeTime!==null)
   },
-
   get duration(): number {
     if (this.count === 0)
       return 0
@@ -33,7 +31,7 @@ const Group = types
     const vailds = this.validEvents
     if (vailds.length > 0)
       vailds.map(v => max = Math.max(v.intensity, max))
-    console.log('max intensity:',max)
+    //console.log('max intensity:',max)
     return max
   },
   get maxFrequency(): number {

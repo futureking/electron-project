@@ -1,16 +1,11 @@
-import { Slider } from "antd";
 import { useState } from "react";
 import { HapticsTrack } from "./haptics-track";
 import TimeTrack from "./time-track";
 
 import style from './track.less';
 
-interface TrackProps {
-}
-
-export function Track(props: TrackProps) {
-  // const [total, setTotal] = useState(30*60*1000);
-  const [total, setTotal] = useState(2000);
+export function Track() {
+  const [total] = useState(1*60*1000);
   return (
     <div>
     <div className={style.track}>

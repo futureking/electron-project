@@ -2,11 +2,12 @@ import { randomUuid } from '@/utils/utils';
 import { types } from 'mobx-state-tree';
 import { Event } from './events';
 import { Group } from './group';
-import { EventType, ICurvePoint } from '@/models/richtap';
-import { keys, values } from 'mobx';
+import { ICurvePoint } from '@/../share/data/IRichTap';
+import { values } from 'mobx';
 
 function sortEvents(events: any) {
   return events
+      .filter((b) => b.relativeTime !== null)
       .sort((a: any, b: any) => (a.relativeTime > b.relativeTime ? 1 : a.relativeTime === b.relativeTime ? 0 : -1))
 }
 
@@ -14,8 +15,10 @@ const Project = types
   .model({
     id: types.identifier,
     name: types.string,
+    url: types.string,
     type: types.enumeration(['Basic', 'Stereo']),
     desc: types.optional(types.string, ""),
+    background: types.string,
     events: types.map(Event),
     groups: types.map(Group),
   })
@@ -26,6 +29,9 @@ const Project = types
     get eventCount() {
       return self.events.size;
     },
+    get sortedValidEvents() {
+      return sortEvents(values(self.events))
+    }
   }))
   .actions(self => ({
     setName(name: string) {
@@ -33,6 +39,12 @@ const Project = types
     },
     setDesc(desc: string) {
       self.desc = desc;
+    },
+    setUrl(url: string) {
+      self.url = url;
+    },
+    setBackground(background: string) {
+      self.background = background;
     },
     addGroup(name: string): string {
       let id = randomUuid()
@@ -44,13 +56,14 @@ const Project = types
         self.groups.get(gid)?.events.push(eid)
       }
     },
-    addTransient(group: string, intensity: number = 100, frequency: number = 50, time?: number) {
-      console.log('addTransient', intensity, frequency, time);
+    addTransient(group: string, intensity: number = 100, frequency: number = 50, index: number = 0,time?: number) {
+      // console.log('addTransient', intensity, frequency, time);
       const id = randomUuid();
       const event = Event.create({
         id: id,
         name: 'Transient ' + self.eventCount,
         type: 'Transient',
+        index: index,
         relativeTime: time,
         intensity: intensity,
         frequency: frequency,
@@ -61,20 +74,21 @@ const Project = types
       }
       return id
     },
-    addContinuous(group: string, duration: number = 200, intensity: number = 100, frequency: number = 50, time?: number, curve?: Array<ICurvePoint>) {
-      console.log('addContinuous', intensity, frequency, time, duration);
+    addContinuous(group: string, duration: number = 200, intensity: number = 100, frequency: number = 50, index: number = 0, time?: number, curve?: Array<ICurvePoint>) {
+      // console.log('addContinuous', intensity, frequency, time, duration);
       const id = randomUuid();
       const event = Event.create({
         id: id,
         name: 'Continuous ' + self.eventCount,
         type: 'Continuous',
+        index: index,
         relativeTime: time,
         duration: duration,
         intensity: intensity,
         frequency: frequency,
         curve: [],
       })
-      if (!!curve) {
+      if (!!curve && curve.length > 0) {
         curve.map((value: ICurvePoint) => {
           event.addCurvePoint(value.Time, value.Intensity, value.Frequency)
         })
@@ -89,7 +103,7 @@ const Project = types
       if (group !== '' && self.groups.has(group)) {
         this.addToGroup(group, id)
       }
-      return id
+      return id;
     },
     remove(id: string) {
       if (self.events.has(id)) {
@@ -111,8 +125,12 @@ const ProjectStore = types
     addProject(name: string, type: 'Basic' | 'Stereo') {
       let id = randomUuid()
       if (name === '')
-        name = 'Project' + self.count;
-      self.projects.set(id, { id: id, name: name, type: type });
+        name = 'Project ' + self.count;
+      self.projects.set(id, { id: id, name: name, type: type, url: '', background:'' });
+      return id
+    },
+    addEmptyProject(id: string) {
+      self.projects.set(id, {id: id, name: '', type: 'Basic', url: '', background:'' });
       return id
     },
     delProject(id: string) {

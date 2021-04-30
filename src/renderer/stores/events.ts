@@ -25,6 +25,7 @@ const Event = types
     id: types.identifier,
     name: types.string,
     type: types.enumeration("Type", ["Transient", "Continuous"]),
+    index: types.number,
     relativeTime: types.maybeNull(types.number),
     duration: types.maybeNull(types.number),
     intensity: types.number,

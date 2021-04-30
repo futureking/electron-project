@@ -26,6 +26,6 @@ const graphData = {
       zIndex: 0,
     },
   ],
-}
+};
 
 export default graphData

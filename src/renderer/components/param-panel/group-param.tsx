@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { InputNumber, Slider, Typography } from 'antd';
-import { ProjectType, TimeType } from '../../models';
+import { TimeType } from '../../models';
 import styles from './group-param.less';
 import gstyles from './param-panel.less';
 import store from '@/stores';
@@ -15,21 +15,24 @@ interface GroupProps {
 
 const GroupParam = observer((props: GroupProps) => {
   const g = store.projectStore.projects.get(store.selection.pid)!.groups.get(store.selection.gid)
-  console.log('group', g?.count)
-  const changeTime = (value: number, type: TimeType) => {
+
+  const changeTime =  (value: number | string | null | undefined, type: TimeType) => {
+    if (value === null || typeof(value) === 'undefined')
+      return
+    let v = typeof value === 'string' ? parseInt(value, 10) : value
     let min = g!.timeAtMin ?? 0;
     let sec = g!.timeAtSec ?? 0;
     let msec = g!.timeAtMSec ?? 0;
     let newValue: number;
     switch (type) {
       case TimeType.Min:
-        newValue = value * 60000 + sec * 1000 + msec;
+        newValue = v * 60000 + sec * 1000 + msec;
         break;
       case TimeType.Sec:
-        newValue = min * 60000 + value * 1000 + msec;
+        newValue = min * 60000 + v * 1000 + msec;
         break;
       case TimeType.MSec:
-        newValue = min * 60000 + sec * 1000 + value;
+        newValue = min * 60000 + sec * 1000 + v;
         break;
       default:
         newValue = g!.start;
@@ -38,8 +41,8 @@ const GroupParam = observer((props: GroupProps) => {
       newValue = 0;
 
     g!.setStart(newValue);
-
   }
+
   return (
     <>
       <div className={gstyles.title}>GROUP</div>
@@ -68,17 +71,17 @@ const GroupParam = observer((props: GroupProps) => {
           <InputNumber
             value={g?.timeAtMin}
             className={styles.time}
-            onChange={(e) => changeTime(e, TimeType.Min)}
+            onChange={value => changeTime(value, TimeType.Min)}
           />
           <InputNumber
             value={g?.timeAtSec}
             className={styles.time}
-            onChange={(e) => changeTime(e, TimeType.Sec)}
+            onChange={value => changeTime(value, TimeType.Sec)}
           />
           <InputNumber
             value={g?.timeAtMSec}
             className={styles.time}
-            onChange={(e) => changeTime(e, TimeType.MSec)}
+            onChange={value => changeTime(value, TimeType.MSec)}
           />
         </li>
         <li>
@@ -94,14 +97,13 @@ const GroupParam = observer((props: GroupProps) => {
             max={100}
             className={styles.slider}
             defaultValue={g!.maxIntensity}
-            onChange={(value: number)=>console.log(value)}
+            onChange={(value: number) => console.log(value)}
           />
           <InputNumber
             min={0}
             max={100}
             className={styles.input}
             value={g!.maxIntensity}
-
           />
         </li>
         <li>
@@ -113,7 +115,7 @@ const GroupParam = observer((props: GroupProps) => {
             // max={100}
             className={styles.slider}
             defaultValue={g!.maxFrequency}
-            onChange={(value: number)=>console.log(value)}
+            onChange={(value: number) => console.log(value)}
           />
           <InputNumber
             min={0}

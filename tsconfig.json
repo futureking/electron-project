@@ -13,10 +13,12 @@
     "noEmit": false,
     "skipLibCheck": true,
     "resolveJsonModule": true,
+    "importHelpers": true,
     "paths": {
       "#/*": ["./src/main/*"],
       "@/*": ["./src/renderer/*"],
       "@@/*": ["./src/renderer/.umi/*"]
+      
     }
   },
   "include": ["src/**/*"],

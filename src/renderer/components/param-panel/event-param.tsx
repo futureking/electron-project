@@ -1,6 +1,5 @@
-import React, { useState } from 'react';
-import { Col, Divider, InputNumber, Row, Slider, Typography } from 'antd';
-import { EventType } from '../../models/richtap';
+import React from 'react';
+import { InputNumber, Slider, Typography } from 'antd';
 
 import styles from './event-param.less';
 import gstyles from './param-panel.less';
@@ -17,20 +16,23 @@ const EventParam = observer(() => {
 
   const event = store.projectStore.projects.get(pid)!.events.get(id)
 
-  const changeRelative = (value: number, type: TimeType) => {
+  const changeRelative = (value: number | string | null | undefined, type: TimeType) => {
+    if (value === null || typeof(value) === 'undefined')
+      return
+    let v = typeof value === 'string' ? parseInt(value, 10) : value;
     let min = event!.relativeTimeAtMin ?? 0;
     let sec = event!.relativeTimeAtSec ?? 0;
     let msec = event!.relativeTimeAtMSec ?? 0;
     let newValue;
     switch (type) {
       case TimeType.Min:
-        newValue = value * 60000 + sec * 1000 + msec;
+        newValue = v * 60000 + sec * 1000 + msec;
         break;
       case TimeType.Sec:
-        newValue = min * 60000 + value * 1000 + msec;
+        newValue = min * 60000 + v * 1000 + msec;
         break;
       case TimeType.MSec:
-        newValue = min * 60000 + sec * 1000 + value;
+        newValue = min * 60000 + sec * 1000 + v;
         break;
       default:
         newValue = event!.relativeTime ?? 0;
@@ -39,8 +41,8 @@ const EventParam = observer(() => {
       newValue = 0;
 
     event!.setRelativeTime(newValue);
-
   }
+
   return (
     <>
       <div className={gstyles.title}>{event?.type}</div>
@@ -65,17 +67,17 @@ const EventParam = observer(() => {
           <InputNumber
             value={event?.relativeTimeAtMin}
             className={styles.time}
-            onChange={(e) => changeRelative(e, TimeType.Min)}
+            onChange={value => changeRelative(value, TimeType.Min)}
           />
           <InputNumber
             value={event?.relativeTimeAtSec}
             className={styles.time}
-            onChange={(e) => changeRelative(e, TimeType.Sec)}
+            onChange={value => changeRelative(value, TimeType.Sec)}
           />
           <InputNumber
             value={event?.relativeTimeAtMSec}
             className={styles.time}
-            onChange={(e) => changeRelative(e, TimeType.MSec)}
+            onChange={value => changeRelative(value, TimeType.MSec)}
           />
         </li>
         <li>
@@ -96,7 +98,7 @@ const EventParam = observer(() => {
             className={styles.input}
             value={event?.eventDuration}
             disabled={event?.type === 'Transient'}
-            onChange={event?.setDuration}
+            // onChange={event?.setDuration}
           />
         </li>
         <li>
@@ -115,7 +117,7 @@ const EventParam = observer(() => {
             max={100}
             className={styles.input}
             value={event?.intensity}
-            onChange={event?.setIntensity}
+            // onChange={event?.setIntensity}
           />
         </li>
         <li>
@@ -134,7 +136,7 @@ const EventParam = observer(() => {
             max={100}
             className={styles.input}
             value={event?.frequency}
-            onChange={event?.setFrequency}
+            // onChange={event?.setFrequency}
           />
         </li>
       </ul>

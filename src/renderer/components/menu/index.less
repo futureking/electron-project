@@ -1,5 +1,14 @@
 @import '../../styles/index.less';
 
 .wrap {
-  font-size: @h1-font-size;
+  display: none;
+  .menu {
+    position: absolute;
+    z-index: 11;
+    top: 36px;
+    left: -20px;
+  }
+  &.visible {
+    display: block;
+  }
 }

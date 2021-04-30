@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import classnames from 'classnames';
 import { Tooltip } from 'antd';
-import { CloseOutlined, PlusOutlined } from '@ant-design/icons';
+import { CloseOutlined } from '@ant-design/icons';
 import STYLES from './index.less';
 
 interface InitData {
@@ -32,15 +32,12 @@ console.info(initData)
 
 const TabList: React.FC = (props: any) => {
   const { activeId=111 } = props;
-  const [tabList, setTabList] = useState(initData);
-  const onTabClick = () => {
+  const [tabList] = useState(initData);
 
-  }
-
-  const onCloseTab = (item) => {
-    console.info(item);
-    setTabList(tabList.filter(tab => tab.id=== activeId))
-  }
+  // const onCloseTab = (item) => {
+  //   console.info(item);
+  //   setTabList(tabList.filter(tab => tab.id=== activeId))
+  // }
 
   return(
     <div className={STYLES.wrap}>

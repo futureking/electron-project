@@ -20,6 +20,10 @@ const Routes: IRoute[] = [
       {
         path: '/mainPage',
         component: './mainPage',
+      },
+      {
+        path: '/main',
+        component: './main',
       }
     ],
   },
