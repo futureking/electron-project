@@ -6,4 +6,35 @@
   .timeLine {
 
   }
+  :global {
+    .x6-split-box-vertical > .x6-split-box-resizer{
+      width: 4px;
+      background: #292E35 !important;
+    }
+    .x6-split-box-horizontal > .x6-split-box-resizer {
+      height: 4px;
+      background: #292E35 !important;
+    }
+    .x6-widget-stencil {
+      background: #292E35;
+    }
+    .x6-widget-stencil-title{
+      background: rgba(0, 0, 0, 0);
+    }
+    .x6-widget-stencil-group > .x6-widget-stencil-group-title{
+      background: rgba(0, 0, 0, 0);
+    }
+    .x6-widget-stencil-search-text{
+      color: #fff;
+      font-size: 12px;
+      background: #242930;
+      border: 1px solid #181818;
+      box-sizing: border-box;
+      box-shadow: inset 0px 2px 4px rgba(0, 0, 0, 0.25);
+      border-radius: 8px;
+    }
+    .x6-graph, .x6-graph-scroller {
+      height: calc(100vh - 200px) !important;
+    }
+  }
 }

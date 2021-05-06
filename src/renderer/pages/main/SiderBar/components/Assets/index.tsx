@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import { Addon, Graph } from '@antv/x6';
+import { Addon, Node, Graph } from '@antv/x6';
 import { PlusOutlined } from '@ant-design/icons';
+import cellMap from '@/common/previewCell';
 import { Collapse } from 'antd';
 import STYLES from './index.less';
 
@@ -26,22 +27,22 @@ const GENERAL_GROUP = [
   {
     key: 'basic',
     name: 'Basic UI',
-    cellTypes: ['imove-start', 'imove-branch', 'imove-behavior']
+    cellTypes: ['node-transient', 'node-continues']
   },
   {
     key: 'game',
     name: 'Game Effect',
-    cellTypes: ['imove-start', 'imove-branch', 'imove-behavior']
+    cellTypes: ['node-transient']
   },
   {
     key: 'ads',
     name: 'Ads Effect',
-    cellTypes: ['imove-start', 'imove-branch', 'imove-behavior']
+    cellTypes: ['node-transient']
   },
   {
     key: 'musical',
     name: 'Musical instrument',
-    cellTypes: ['imove-start', 'imove-branch', 'imove-behavior']
+    cellTypes: ['node-transient']
   }
 ];
 
@@ -66,19 +67,19 @@ const Search = () => {
 };
 
 const PanelContent: React.FC<IPanelContentProps> = (props) => {
-  const {  cellTypes } = props;
-  // const onMouseDown = (evt: any, cellType: string) => {
-  //   dnd.start(Node.create({ shape: cellType }), evt);
-  // };
+  const { dnd, cellTypes } = props;
+  const onMouseDown = (evt: any, cellType: string) => {
+    dnd.start(Node.create({ shape: cellType }), evt);
+  };
   return (
     <div className={STYLES.panelContent}>
       {cellTypes.map((cellType, index) => {
-        // const Component = cellMap[cellType];
-        // return (
-        //   <div key={index} className={STYLES.cellWrapper}>
-        //     <Component onMouseDown={(evt: any) => onMouseDown(evt, cellType)} />
-        //   </div>
-        // );
+        const Component = cellMap[cellType];
+        return (
+          <div key={index} className={STYLES.cellWrapper}>
+            <Component onMouseDown={(evt: any) => onMouseDown(evt, cellType)} />
+          </div>
+        );
       })}
     </div>
   );
@@ -109,7 +110,7 @@ const Assets: React.FC<Iprops> = (props) => {
         </div>
         
         <Title title='Pattern Library' />
-        <div className={STYLES.graph} id="AssetsBasic">
+        <div className={STYLES.graph} id="AssetsLibrary">
           <Collapse
             className={STYLES.collapse}
             defaultActiveKey={['general', 'custom']}

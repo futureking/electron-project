@@ -3,8 +3,8 @@ import { ReactShape } from '@antv/x6-react-shape'
 import STYLES from './index.less'
 class CustomNode extends Component<{
   node?: ReactShape
-  text: string
-  imgSrc: string
+  text?: string
+  imgSrc?: string
 }> {
   shouldComponentUpdate() {
     const node = this.props.node

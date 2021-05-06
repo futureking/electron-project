@@ -4,16 +4,16 @@ import 'antd/es/collapse/style';
 import STYLES from './index.less';
 
 // import { Collapse } from 'antd';
-import { Addon, Graph } from '@antv/x6';
+import { Addon, Node, Graph } from '@antv/x6';
 import Assets from './components/Assets';
-// import cellMap from '../../common/previewCell';
+import cellMap from '@/common/previewCell';
 
 const { Dnd } = Addon;
 // const { Panel } = Collapse;
 const GENERAL_GROUP = {
   key: 'general',
   name: '通用元件',
-  cellTypes: ['imove-start', 'imove-branch', 'imove-behavior'],
+  cellTypes: ['node-transient', 'node-continues', 'imove-behavior'],
 };
 
 const TabData = [
@@ -37,19 +37,20 @@ interface ISideBarProps {
   flowChart: Graph;
 }
 
-// interface IPanelContentProps {
-//   dnd: Addon.Dnd;
-//   cellTypes: string[];
-// }
+interface IPanelContentProps {
+  dnd: Addon.Dnd;
+  cellTypes: string[];
+}
 
 
 const SideBar: React.FC<ISideBarProps> = (props) => {
   const { flowChart } = props;
   const [key, setKey] = useState(1);
   const [groups, setGroups] = useState<IGroupItem[]>([]);
-  const dnd = useMemo(() => new Dnd({ target: flowChart, scaled: true }), [
-    flowChart,
-  ]);
+  const dnd = useMemo(() => new Dnd({ 
+    target: flowChart, 
+    scaled: true 
+  }), [flowChart]);
   console.info(groups, dnd);
 
   // life
@@ -111,23 +112,23 @@ const Function = () => {
   )
 }
 
-// const PanelContent: React.FC<IPanelContentProps> = (props) => {
-//   const { dnd, cellTypes } = props;
-  // const onMouseDown = (evt: any, cellType: string) => {
-  //   dnd.start(Node.create({ shape: cellType }), evt);
-  // };
-  // return (
-  //   <div className={STYLES.panelContent}>
-  //     {cellTypes.map((cellType, index) => {
-        // const Component = cellMap[cellType];
-        // return (
-        //   <div key={index} className={STYLES.cellWrapper}>
-        //     <Component onMouseDown={(evt: any) => onMouseDown(evt, cellType)} />
-        //   </div>
-        // );
-  //     })}
-  //   </div>
-  // );
-// };
+const PanelContent: React.FC<IPanelContentProps> = (props) => {
+  const { dnd, cellTypes } = props;
+  const onMouseDown = (evt: any, cellType: string) => {
+    dnd.start(Node.create({ shape: cellType }), evt);
+  };
+  return (
+    <div className={STYLES.panelContent}>
+      {cellTypes.map((cellType, index) => {
+        const Component = cellMap[cellType];
+        return (
+          <div key={index} className={STYLES.cellWrapper}>
+            <Component onMouseDown={(evt: any) => onMouseDown(evt, cellType)} />
+          </div>
+        );
+      })}
+    </div>
+  );
+};
 
 export default SideBar;

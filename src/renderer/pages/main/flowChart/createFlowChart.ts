@@ -1,15 +1,81 @@
 // import shortcuts from '../../common/shortcuts';
 import { Edge, Graph, Node } from '@antv/x6';
 // import { MIN_ZOOM, MAX_ZOOM } from '../../common/const';
-// import baseCellSchemaMap from '../../common/baseCell';
-// import { getSelectedEdges } from '../../utils/flowChartUtils';
-// import { registerServerStorage } from './registerServerStorage';
+// import baseCellSchemaMap from '@/common/baseCell';
 
 // X6 register base cell shape
 // Object.values(baseCellSchemaMap).forEach((schema) => {
 //   const { base, ...rest } = schema;
 //   base.define(rest);
 // });
+
+const registerNodes = (flowChart: Graph): void => {
+  const unitPort = {
+    groups: {
+      right: {
+        position: 'right',
+        attrs: {
+          circle: {
+            r: 3,
+            magnet: true,
+            stroke: '#5F95FF',
+            strokeWidth: 1,
+            fill: '#fff',
+            style: {
+              visibility: 'hidden',
+            },
+            connectionCount: 2
+          },
+        },
+      },
+      left: {
+        position: 'left',
+        attrs: {
+          circle: {
+            r: 3,
+            magnet: true,
+            stroke: '#5F95FF',
+            strokeWidth: 1,
+            fill: '#fff',
+            style: {
+              visibility: 'hidden',
+            },
+            connectionCount: 0
+          },
+        },
+      },
+    },
+    items: [
+      {
+        group: 'right',
+      },
+      {
+        group: 'left',
+      },
+    ],
+  };
+
+  flowChart.createNode({
+    x: 40,
+    y: 40,
+    width: 60,
+    height: 40,
+    shape: 'react-shape',
+    ports: unitPort,
+    type: 'Transient',
+    component: () => import('@/common/baseCell/transient')
+  });
+  flowChart.createNode({
+    x: 40,
+    y: 40,
+    width: 60,
+    height: 40,
+    shape: 'react-shape',
+    ports: unitPort,
+    type: 'Continues',
+    component: () => import('@/common/baseCell/continous')
+  });
+}
 
 const registerEvents = (flowChart: Graph): void => {
   flowChart.on('node:added', (args) => {
@@ -102,9 +168,9 @@ const createFlowChart = (
       highlight: true,
       anchor: 'center',
       connectionPoint: 'anchor',
-      router: {
-        name: 'manhattan',
-      },
+      // router: {
+      //   name: 'manhattan',
+      // },
       validateConnection({
         sourceView,
         targetView,
@@ -125,9 +191,9 @@ const createFlowChart = (
       color: '#f8f9fa',
     },
     // https://x6.antv.vision/zh/docs/tutorial/basic/grid
-    grid: {
-      visible: true,
-    },
+    // grid: {
+    //   visible: true,
+    // },
     // https://x6.antv.vision/zh/docs/tutorial/basic/selection
     selecting: {
       enabled: true,
@@ -162,6 +228,7 @@ const createFlowChart = (
       modifiers: ['ctrl', 'meta'],
     },
   });
+  registerNodes(flowChart);
   registerEvents(flowChart);
   // registerShortcuts(flowChart);
   // registerServerStorage(flowChart);
