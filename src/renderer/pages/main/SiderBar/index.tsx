@@ -4,9 +4,8 @@ import 'antd/es/collapse/style';
 import STYLES from './index.less';
 
 // import { Collapse } from 'antd';
-import { Addon, Node, Graph } from '@antv/x6';
+import { Addon, Graph } from '@antv/x6';
 import Assets from './components/Assets';
-import cellMap from '@/common/previewCell';
 
 const { Dnd } = Addon;
 // const { Panel } = Collapse;
@@ -35,11 +34,6 @@ interface IGroupItem {
 
 interface ISideBarProps {
   flowChart: Graph;
-}
-
-interface IPanelContentProps {
-  dnd: Addon.Dnd;
-  cellTypes: string[];
 }
 
 
@@ -87,23 +81,6 @@ const SideBar: React.FC<ISideBarProps> = (props) => {
   );
 };
 
-// const Assets = ({groups, dnd}) => {
-//   return(
-//     <div>
-//       <Collapse
-//         className={STYLES.collapse}
-//         defaultActiveKey={['general', 'custom']}
-//       >
-//         {groups.map((group) => (
-//           <Panel key={group.key} header={group.name}>
-//             <PanelContent dnd={dnd} cellTypes={group.cellTypes} />
-//           </Panel>
-//         ))}
-//       </Collapse>
-//     </div>
-//   )
-// }
-
 const Function = () => {
   return(
     <div>
@@ -111,24 +88,5 @@ const Function = () => {
     </div>
   )
 }
-
-const PanelContent: React.FC<IPanelContentProps> = (props) => {
-  const { dnd, cellTypes } = props;
-  const onMouseDown = (evt: any, cellType: string) => {
-    dnd.start(Node.create({ shape: cellType }), evt);
-  };
-  return (
-    <div className={STYLES.panelContent}>
-      {cellTypes.map((cellType, index) => {
-        const Component = cellMap[cellType];
-        return (
-          <div key={index} className={STYLES.cellWrapper}>
-            <Component onMouseDown={(evt: any) => onMouseDown(evt, cellType)} />
-          </div>
-        );
-      })}
-    </div>
-  );
-};
 
 export default SideBar;

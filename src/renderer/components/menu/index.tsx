@@ -6,14 +6,15 @@ import '@antv/x6-react-components/es/menu/style/index.css';
 import STYLES from './index.less';
 
 import { HeV1, HeV2 } from '@/../share/data/IRichTap';
-import { EXPORT_HE, IMPORT_HE, OPEN_PROJ, SAVE_PROJ } from '@/../share/define/message';
+import { EXPORT_HE, IMPORT_HE, SAVE_PROJ } from '@/../share/define/message';
 import { addHeToGroup, formatHe } from '@/utils/he-utils';
 import { X6DataFormart } from '@/utils/x6-data-util';
 import store from '@/stores';
 import {
-  getSnapshot, applySnapshot
+  getSnapshot
 } from 'mobx-state-tree';
 import FlowGraph from '@/components/Graph';
+import { onOpenProject } from '@/utils/file-utils';
 const { ipcRenderer } = window;
 
 const MenuItem = Menu.Item
@@ -58,21 +59,7 @@ const CustomMenu = (props: IProps) => {
     ipcRenderer.send(EXPORT_HE, stream);
   };
   const openProject = () => {
-    ipcRenderer.invoke(OPEN_PROJ).then(r => {
-      if (typeof r === 'undefined')
-        return;
-      let url = r.url
-      let project = JSON.parse(r.data);
-      try {
-        store.projectStore.addEmptyProject(project!.id);
-        applySnapshot(store.projectStore.projects.get(project!.id)!, project);
-        store.projectStore.projects.get(project!.id)!.setName(r.name);
-        store.projectStore.projects.get(project!.id)!.setUrl(url);
-        store.selection.setSelection('Project', project!.id);
-      } catch (error) {
-        console.error(error);
-      }
-    });
+    onOpenProject();
   };
   const saveProject = () => {
     const project = store.projectStore.projects.get(store.selection.pid);

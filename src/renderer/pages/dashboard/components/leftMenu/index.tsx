@@ -1,27 +1,42 @@
 import React from 'react';
-// import CreateIcon from './img/create.png';
-// import OpenIcon from './img/open.png';
+import { history } from 'umi';
+import { onOpenProject } from '@/utils/file-utils';
 import STYLES from './index.less';
 
 const LeftMenu: React.FC = () => {
+
+  const onCreate = () => {
+    history.push('./main');
+  }
+
+  const onOpen = () => {
+    onOpenProject();
+  }
+
   return(
     <div className={STYLES.wrap}>
       <div className={STYLES.logo}>
-        <h1>logo</h1>
+        <img src={require('../../imgs/logo.svg')} alt="" />
       </div>
       <ul className={STYLES.list}>
-        <li>
-          {/* <img src={CreateIcon} /> */}
+        <li onClick={onCreate}>
+          <img src={require('./img/create.png')} alt="" />
           Create New
         </li>
-        <li>
-          {/* <img src={OpenIcon} /> */}
+        <li onClick={onOpen}>
+          <img src={require('./img/open.png')} alt="" />
           Open
         </li>
       </ul>
       <div className={STYLES.footer}>
-        <p>Account</p>
-        <p>Help</p>
+        <p>
+          <img src={require('../../imgs/account.svg')} />
+          <span>Account</span>
+        </p>
+        <p>
+          <img src={require('../../imgs/help.svg')} />
+          <span>Help</span>
+        </p>
       </div>
     </div>
   )

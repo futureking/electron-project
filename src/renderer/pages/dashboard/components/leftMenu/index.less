@@ -2,30 +2,43 @@
 .wrap {
   height: 100vh;
   position: relative;
+  ul{
+    padding: 0;
+  }
   .logo {
     width: 100%;
-    height: 200px;
     text-align: center;
-    line-height: 200px;
+    padding: 112px 0 158px 0;
+    img{
+      width: 155px;
+    }
   }
   .list {
     & li {
       height: 40px;
       line-height: 40px;
+      padding-left: 30px;
       cursor: pointer;
+      &:hover {
+        background: @gray-600;
+      }
     }
     & img {
       width: 20px;
       margin-right: 10px;
     }
-    &:hover {
-      background: @gray-800;
-    }
   }
   .footer {
     position: absolute;
     bottom: 0;
-    left: 40px;
+    padding-left: 32px;
     cursor: pointer;
+    img{
+      width: 18px;
+    }
+    span{
+      display: inline-block;
+      margin-left: 10px;
+    }
   }
 }
