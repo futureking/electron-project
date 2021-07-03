@@ -1,0 +1,17 @@
+{
+    "Metadata": {
+        "Created": "2021-06-23",
+        "Description": "Instrument Library",
+        "Version": 1
+    },
+    "Pattern": [{
+        "Event": {
+            "Parameters": {
+                "Frequency": 60,
+                "Intensity": 100
+            },
+            "Type": "transient",
+            "RelativeTime": 8
+        }
+    }]
+}

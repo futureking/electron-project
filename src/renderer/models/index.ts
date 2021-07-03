@@ -8,3 +8,5 @@ export enum TimeType {
   Sec,
   MSec,
 }
+
+export declare type OPType = "Intensity" | "Duration" | "Position" | "None";

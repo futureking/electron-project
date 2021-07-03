@@ -15,10 +15,9 @@
     "resolveJsonModule": true,
     "importHelpers": true,
     "paths": {
-      "#/*": ["./src/main/*"],
-      "@/*": ["./src/renderer/*"],
-      "@@/*": ["./src/renderer/.umi/*"]
-      
+      "#/*": ["src/main/*"],
+      "@/*": ["src/renderer/*"],
+      "@@/*": ["src/.umi/*"],
     }
   },
   "include": ["src/**/*"],

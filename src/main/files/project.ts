@@ -1,6 +1,11 @@
 import { app, dialog, OpenDialogOptions } from "electron";
-import { promises as fs } from 'fs'
+import fs, { promises as fsp } from 'fs'
 import * as path from 'path';
+
+const log = require('electron-log');
+
+const Store = require('electron-store');
+const fileStore = new Store({ name: 'Files Data' });
 
 const importRtcpOptions: OpenDialogOptions = {
   title: "Select Rtcp file",
@@ -21,25 +26,33 @@ const importRtcpOptions: OpenDialogOptions = {
 
 const PROJ_EXT = '.rtcp';
 
-export async function openProject() {
-  try {
-    const dialogRet = await dialog.showOpenDialog(importRtcpOptions);
-    if (dialogRet.canceled || dialogRet.filePaths.length === 0)
-      return;
-    const readRet = await fs.readFile(dialogRet.filePaths[0]);
-    if (readRet.length === 0)
-      return;
-    return Promise.resolve({ 
-      name: path.basename(dialogRet.filePaths[0], PROJ_EXT), 
-      url: dialogRet.filePaths[0], 
-      data: readRet.toString() });
-  } catch (error) {
-    console.log(error);
-  }
-  return;
+export async function getProjectPath() {
+  const ret = await dialog.showOpenDialog(importRtcpOptions);
+  if (ret.canceled || ret.filePaths.length === 0)
+    return;
+  else
+    return ret.filePaths[0];
 }
 
-export async function saveProject(name:string, url: string, stream: string) {
+export async function openProject(filePath: string) {
+  try {
+    await fsp.access(filePath, fs.constants.F_OK | fs.constants.R_OK);
+    const readRet = await fsp.readFile(filePath);
+    if (readRet.length === 0)
+      return;
+    return Promise.resolve({
+      name: path.basename(filePath, PROJ_EXT),
+      url: filePath,
+      data: readRet.toString()
+    });
+  }
+  catch (e) {
+    log.error('openProject error', e);
+    return Promise.reject('openProject error');
+  }
+}
+
+export async function saveProject(id: string, name: string, url: string, stream: string) {
   if (stream.length === 0)
     return;
   try {
@@ -58,18 +71,23 @@ export async function saveProject(name:string, url: string, stream: string) {
       url = dialogRet.filePath;
     }
     else {
-      let file = await fs.stat(url);
+      let file = await fsp.stat(url);
       if (!file.isFile() || path.extname(url) !== PROJ_EXT) {
         return;
       }
     }
-    await fs.writeFile(url, stream);
+    await fsp.writeFile(url, stream);
+    const files: any = fileStore.get('files') || {};
+    const fileObj = { id, url, name, stream };
+    fileStore.set('files', { ...files, [id]: fileObj });
+
     return Promise.resolve({
       name: path.basename(url, PROJ_EXT),
-      url: url
+      url: url,
+      id: id
     });
-  } catch (error) {
-    console.error(error);
+  } catch (e) {
+    log.error('saveProject error', e);
   }
   return;
 }

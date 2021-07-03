@@ -1,27 +1,39 @@
-import { applySnapshot } from 'mobx-state-tree';
-import { OPEN_PROJ } from '@/../share/define/message';
+import { OPEN_PROJ, PAGE_CHG_MAIN } from '@/../share/define/message';
 import store from '@/stores';
+import { isUndefined } from 'lodash';
+import { message } from 'antd';
 const { ipcRenderer } = window;
+import { history } from 'umi';
 
-const onOpenProject = () => {
-  ipcRenderer.invoke(OPEN_PROJ).then(r => {
-    if (typeof r === 'undefined')
-      return;
-    let url = r.url;
-    console.info(url);
-    debugger
+function openProject(filePath: string = '') {  
+  ipcRenderer.invoke(OPEN_PROJ, filePath).then(r => {
+    if (isUndefined(r)) return;
     let project = JSON.parse(r.data);
+    if (isUndefined(project))
+      return;
     try {
-      store.projectStore.addEmptyProject(project!.id);
-      applySnapshot(store.projectStore.projects.get(project!.id)!, project);
-      store.projectStore.projects.get(project!.id)!.setName(r.name);
-      store.projectStore.projects.get(project!.id)!.setUrl(url);
-      store.selection.setSelection('Project', project!.id);
-    } catch (error) {
-      console.error(error);
+      const projectid = project.id;
+      const name = `${project.name}(${project.type})}`;
+      if (history.location.pathname === '/dashboard') {
+        ipcRenderer.invoke(PAGE_CHG_MAIN).then(() => {
+          history.push('/main');
+        });
+      }
+      store.recoverPeoject(project, r.name, r.url);
+      const tabid = store.getRootTab(projectid, name);
+      store.selection.changeTab(tabid);
+      store.selection.selectRoot();
+      store.selector.reset();
+    } catch (e) {
+      console.error('openProject error', e);
     }
+  })
+  .catch(reject => {console.error(reject.message);
+    message.info(`Cann't open project ${filePath} `);
+    return;
   });
 }
 
-export { onOpenProject }
+
+export { openProject }
 

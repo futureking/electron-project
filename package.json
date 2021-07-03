@@ -1,6 +1,6 @@
 {
-    "name": "electron-pro",
-    "version": "1.0.0",
+    "name": "richtap-creator-pro",
+    "version": "1.0.4",
     "description": "Tool for haptics.",
     "main": "./dist/main/main.js",
     "author": {
@@ -9,10 +9,8 @@
     },
     "private": true,
     "build": {
-        "productName": "electron-pro",
-        "files": [
-            "!node_modules/"
-        ],
+        "productName": "RichTap Creator Pro",
+        "icon": "/static/icon.png",
         "directories": {
             "output": "release"
         },
@@ -24,7 +22,28 @@
             "allowElevation": true,
             "allowToChangeInstallationDirectory": true,
             "deleteAppDataOnUninstall": true
-        }
+        },
+        "win": {
+            "extraResources": [
+                "node_modules/ffmpeg-static/ffmpeg.exe",
+                "node_modules/ffprobe-static/bin/win32/x64/**",
+                "plugins/a2v/**",
+                "library/**/**"
+            ]
+        },
+        "asarUnpack": [
+            "node_modules/ffmpeg-static/ffmpeg.exe",
+            "node_modules/ffmpeg-static/index.js",
+            "node_modules/ffmpeg-static/package.json",
+            "node_modules/ffprobe-static/bin/win32/x64/ffprobe.exe",
+            "node_modules/ffprobe-static/index.js",
+            "node_modules/ffprobe-static/package.json",
+            "plugins/a2v/**",
+            "library/**"
+        ],
+        "extraResources": [
+            "./extraResources"
+        ]
     },
     "scripts": {
         "start": "concurrently \"yarn start:renderer\" \"yarn start:main\"",
@@ -53,26 +72,44 @@
         "@antv/x6": "^1.18.1",
         "@antv/x6-react-components": "^1.1.7",
         "@antv/x6-react-shape": "^1.3.5",
+        "@types/audio-play": "^2.2.0",
+        "@types/ffmpeg-static": "^3.0.0",
+        "@types/ffprobe-static": "^2.0.0",
+        "@types/fluent-ffmpeg": "^2.1.17",
+        "@types/mousetrap": "^1.6.8",
         "@types/uuid": "^8.3.0",
         "ahooks": "^2.10.0",
         "axios": "^0.21.1",
         "bufferutil": "^4.0.3",
+        "dayjs": "^1.10.4",
+        "electron-log": "^4.3.5",
+        "electron-store": "^8.0.0",
         "express": "^4.17.1",
+        "ffmpeg-static": "^4.3.0",
+        "ffprobe": "^1.1.2",
+        "ffprobe-static": "^3.0.0",
+        "fluent-ffmpeg": "^2.1.2",
         "internal-ip": "^6.2.0",
         "lodash": "^4.17.21",
         "lowdb": "^1.0.0",
         "mobx": "^6.2.0",
         "mobx-react-lite": "^3.2.0",
         "mobx-state-tree": "^5.0.1",
+        "mousetrap": "^1.6.5",
         "mst-middlewares": "^5.0.1",
+        "node-abi": "^2.30.0",
+        "node-loader": "1.0.3",
         "qrcode.react": "^1.0.1",
         "react-split-pane": "^2.0.3",
         "react-transition-group": "^4.4.1",
         "react-use": "^17.2.1",
         "socket.io": "^4.0.1",
+        "ts-loader": "^8.0.14",
         "umi": "^3.3.9",
         "unstated-next": "^1.1.0",
-        "utf-8-validate": "^5.0.4"
+        "url-loader": "^4.1.1",
+        "utf-8-validate": "^5.0.4",
+        "wavesurfer.js": "^5.0.1"
     },
     "devDependencies": {
         "@types/react-transition-group": "^4.4.0",
@@ -82,17 +119,17 @@
         "concurrently": "^6.0.0",
         "cross-env": "^7.0.2",
         "electron": "^11.2.1",
-        "electron-builder": "^22.9.1",
+        "electron-builder": "^22.11.7",
         "electron-debug": "^3.2.0",
         "electron-webpack": "^2.8.2",
         "electron-webpack-ts": "^4.0.1",
         "jest": "^24.9.0",
         "nodemon": "^2.0.7",
         "prettier": "^2.2.1",
-        "qrcode.react": "^1.0.1",
         "ts-loader": "^8.0.14",
         "tslint": "^5.10.0",
         "typescript": "^4.1.3",
+        "url-loader": "^4.1.1",
         "webpack": "4.28.0",
         "webpack-cli": "^3.2.1",
         "webpack-merge": "^4.2.1"

@@ -276,9 +276,7 @@ export default class FlowGraph  {
     const container = document.getElementById('container')!;
 
     graph.on('node:added', ({ node, index, options }) => {
-      console.info('node:added', node, index, options);
       const data = node.getProp();
-      console.info(data)
       if(data.type === 'Music') {
         // return <AddMusicModal visible={true} flowChart={graph} />
         graph.trigger('graph:editCode');
@@ -286,7 +284,6 @@ export default class FlowGraph  {
     });
 
     graph.on('node:contextmenu', ({ cell, view }) => {
-      console.info('clicked node:contextmenu');
       const oldText = cell.attr('text/textWrap/text') as string
       const elem = view.container.querySelector('.x6-edit-text') as HTMLElement
       if (elem == null) { return }
@@ -334,7 +331,7 @@ export default class FlowGraph  {
     })
 
     graph.on('node:collapse', ({ node, e }) => {
-      console.info('clicked node:collapse');
+      // console.info('clicked node:collapse');
       e.stopPropagation()
       node.toggleCollapse()
       const collapsed = node.isCollapsed()
@@ -349,18 +346,18 @@ export default class FlowGraph  {
     })
 
     graph.on('node:embedded', ({ cell }) => {
-      console.info('clicked node:embedded');
+      // console.info('clicked node:embedded');
       if (cell.shape !== 'groupNode') {
         cell.toFront()
       }
     })
 
     graph.on('node:dblclick', ({e, x, y, node, view}) => {
-      console.info(e, x, y, node, view)
+      // console.info(e, x, y, node, view)
     })
 
     graph.bindKey('backspace', () => {
-      console.info('clicked backspace');
+      // console.info('clicked backspace');
       const cells = graph.getSelectedCells()
       if (cells.length) {
         graph.removeCells(cells)

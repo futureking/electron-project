@@ -19,8 +19,27 @@
       line-height: 40px;
       padding-left: 30px;
       cursor: pointer;
+      position: relative;
+      &:first-child{
+        &::before {
+          content: "";
+          width: 3px;
+          height: 40px;
+          background: linear-gradient(269.87deg, #2DA1F0 0%, #5CE2FF 54.17%, #F1F2AD 100%);
+          position: absolute;
+          left: 0;
+        } 
+      }
       &:hover {
         background: @gray-600;
+        &::before {
+          content: "";
+          width: 3px;
+          height: 40px;
+          background: linear-gradient(269.87deg, #2DA1F0 0%, #5CE2FF 54.17%, #F1F2AD 100%);
+          position: absolute;
+          left: 0;
+        } 
       }
     }
     & img {

@@ -4,11 +4,30 @@
   display: none;
   .menu {
     position: absolute;
-    z-index: 11;
+    z-index: 1111;
     top: 36px;
     left: -20px;
   }
   &.visible {
     display: block;
+  }
+  :global {
+    .x6-menu{
+      background-color: #141c27;
+      color: #fff;
+    }
+    .x6-menu-item-button{
+      color: #fff;
+    }
+    .x6-menu-submenu-menu, .x6-menu-submenu.x6-menu-item-disabled:hover > .x6-menu-submenu-menu{
+      background: #141c27;
+    }
+    .x6-menu-submenu-arrow, .x6-menu-submenu.x6-menu-item-disabled:hover > .x6-menu-item-button > .x6-menu-submenu-arrow{
+      border-left: 5px solid #fff;
+    }
+    .x6-menu-item-active > .x6-menu-item-button, .x6-menu-item:hover > .x6-menu-item-button {
+      background: linear-gradient(143.13deg, #DADE94 0%, #2FB3DA 85.71%);
+      color: #333;
+    }
   }
 }

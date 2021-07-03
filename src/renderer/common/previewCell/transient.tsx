@@ -13,7 +13,7 @@ const Cell: React.FC<IProps> = (props) => {
     <div>
       <div className={STYLES.rect} {...rest}>
         <i><img src={require('../imgs/bg_transient.svg')} /></i>
-        <label>{title}</label>
+        <label>{'Transient'}</label>
       </div>
     </div>
   )

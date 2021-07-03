@@ -1,25 +1,32 @@
 import React from 'react';
 import { history } from 'umi';
-import { onOpenProject } from '@/utils/file-utils';
+import { openProject } from '@/utils/file-utils';
 import STYLES from './index.less';
+import { PAGE_CHG_MAIN } from '@/../share/define/message';
+import { createProject } from '@/cmd';
+const { ipcRenderer } = window;
 
 const LeftMenu: React.FC = () => {
 
   const onCreate = () => {
-    history.push('./main');
+    createProject();
+    ipcRenderer.invoke(PAGE_CHG_MAIN).then(() => history.push('/main'));
   }
 
   const onOpen = () => {
-    onOpenProject();
+    openProject();
+    // ipcRenderer.invoke(PAGE_CHG_MAIN).then(() => {
+    //   history.push('/main');
+    // });
   }
 
-  return(
+  return (
     <div className={STYLES.wrap}>
-      <div className={STYLES.logo}>
+      <div className={STYLES.logo} onClick={() => history.push('./')}>
         <img src={require('../../imgs/logo.svg')} alt="" />
       </div>
       <ul className={STYLES.list}>
-        <li onClick={onCreate}>
+        <li onClick={onCreate} style={{background:'#323842'}}>
           <img src={require('./img/create.png')} alt="" />
           Create New
         </li>

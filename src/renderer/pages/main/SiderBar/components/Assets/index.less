@@ -1,6 +1,7 @@
 .wrap {
   font-size: 12px;
   padding: 0 20px;
+  overflow-y: auto;
   input {
     background: rgba(0,0,0,0);
     border: 0;
@@ -42,9 +43,13 @@
   }
   .panelContent {
     display: flex;
+    flex-flow: wrap;
     justify-content: space-between;
     .cellWrapper {
-
+      background: #323842;
+    }
+    .disabled {
+      background: #323842;
     }
   }
   :global {

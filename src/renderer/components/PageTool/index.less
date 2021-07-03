@@ -1,0 +1,48 @@
+@import '../../styles/index.less';
+.wrap{
+  width: 100%;
+  height: 46px;
+  line-height: 46px;
+  background: @gray-800;
+  display: flex;
+  justify-content: space-between;
+  
+  .actived {
+    background: #2BBED1;
+  }
+  ul{
+    padding: 0;
+    margin: 0;
+    :first{
+      li{
+        &:first-child{
+          border-right: 1px solid #48505D;
+        }
+      }
+    }
+    li {
+      width: 50px;
+      float: left;
+      text-align: center;
+      cursor: url('./imgs/hand.svg');
+      &:hover {
+        background: #2BBED1;
+      }
+    }
+    .border {
+      &::before{
+        content: "";
+        border-left: 1px solid #5D646A;
+        position: relative;
+        right: 18px;
+        top: 2px;
+        margin-left: 2px;
+      }
+    }
+  }
+  :global {
+    .ant-badge-dot {
+      box-shadow: 0 0 !important;
+    }
+  }
+}

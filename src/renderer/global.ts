@@ -2,7 +2,7 @@ const info = window._INFO;
 
 window.ipcRenderer?.invoke('getGlobal', 'author').then(([author]) => {
   const message = [
-    `%c[electron-pro]%c`,
+    `%c[richtap-creator-pro]%c`,
     `%cauther%c`,
     `${author}`,
     `%cinfo%c`,

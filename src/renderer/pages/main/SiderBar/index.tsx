@@ -1,19 +1,10 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState } from 'react';
 import classnames from 'classnames';
 import 'antd/es/collapse/style';
-import STYLES from './index.less';
-
-// import { Collapse } from 'antd';
-import { Addon, Graph } from '@antv/x6';
+import { Graph } from '@antv/x6';
 import Assets from './components/Assets';
-
-const { Dnd } = Addon;
-// const { Panel } = Collapse;
-const GENERAL_GROUP = {
-  key: 'general',
-  name: '通用元件',
-  cellTypes: ['node-transient', 'node-continues', 'imove-behavior'],
-};
+import Function from './components/Functions';
+import STYLES from './index.less';
 
 const TabData = [
   {
@@ -26,12 +17,6 @@ const TabData = [
   }
 ];
 
-interface IGroupItem {
-  key: string;
-  name: string;
-  cellTypes: string[];
-}
-
 interface ISideBarProps {
   flowChart: Graph;
 }
@@ -40,18 +25,6 @@ interface ISideBarProps {
 const SideBar: React.FC<ISideBarProps> = (props) => {
   const { flowChart } = props;
   const [key, setKey] = useState(1);
-  const [groups, setGroups] = useState<IGroupItem[]>([]);
-  const dnd = useMemo(() => new Dnd({ 
-    target: flowChart, 
-    scaled: true 
-  }), [flowChart]);
-  console.info(groups, dnd);
-
-  // life
-  useEffect(() => {
-    // TODO: fetch to get custom group data
-    setGroups([GENERAL_GROUP]);
-  }, []);
 
   return (
     <div className={STYLES.container}>
@@ -74,19 +47,11 @@ const SideBar: React.FC<ISideBarProps> = (props) => {
           }
         </div>
         <div className={STYLES.content}>
-          { key===1 ? <Assets flowChart={flowChart} /> : <Function /> }
+          { key===1 ? <Assets flowChart={flowChart} /> : <Function flowChart={flowChart} /> }
         </div>
       
     </div>
   );
 };
-
-const Function = () => {
-  return(
-    <div>
-      function
-    </div>
-  )
-}
 
 export default SideBar;

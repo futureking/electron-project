@@ -1,0 +1,92 @@
+{
+    "Metadata": {
+        "Created": "2021-06-23",
+        "Description": "Game Effect Library",
+        "Version": 1
+    },
+    "Pattern": [{
+            "Event": {
+                "Parameters": {
+                    "Frequency": 34,
+                    "Intensity": 83
+                },
+                "Type": "transient",
+                "RelativeTime": 31
+            }
+        },
+        {
+            "Event": {
+                "Duration": 256,
+                "Parameters": {
+                    "Curve": [{
+                            "Frequency": -100,
+                            "Intensity": 0.0,
+                            "Time": 0
+                        },
+                        {
+                            "Frequency": -60,
+                            "Intensity": 1.0,
+                            "Time": 2
+                        },
+                        {
+                            "Frequency": -100,
+                            "Intensity": 0.42,
+                            "Time": 190
+                        },
+                        {
+                            "Frequency": -75,
+                            "Intensity": 0.0,
+                            "Time": 256
+                        }
+                    ],
+                    "Frequency": 62,
+                    "Intensity": 72
+                },
+                "Type": "continuous",
+                "RelativeTime": 56
+            }
+        },
+        {
+            "Event": {
+                "Parameters": {
+                    "Frequency": 10,
+                    "Intensity": 100
+                },
+                "Type": "transient",
+                "RelativeTime": 526
+            }
+        },
+        {
+            "Event": {
+                "Duration": 241,
+                "Parameters": {
+                    "Curve": [{
+                            "Frequency": -100,
+                            "Intensity": 0.0,
+                            "Time": 0
+                        },
+                        {
+                            "Frequency": -77,
+                            "Intensity": 0.76,
+                            "Time": 1
+                        },
+                        {
+                            "Frequency": -100,
+                            "Intensity": 0.42,
+                            "Time": 178
+                        },
+                        {
+                            "Frequency": -75,
+                            "Intensity": 0.0,
+                            "Time": 241
+                        }
+                    ],
+                    "Frequency": 55,
+                    "Intensity": 80
+                },
+                "Type": "continuous",
+                "RelativeTime": 559
+            }
+        }
+    ]
+}

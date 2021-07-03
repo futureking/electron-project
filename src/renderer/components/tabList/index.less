@@ -1,24 +1,49 @@
+@import '../../styles/index.less';
 .wrap {
+  display: flex;
+  background: @black;
+  height: 37px;
   ul{
-
-    width: 100%;
     display: flex;
     flex-wrap: nowrap;
+    padding: 0;
   }
   a{
     text-decoration: none;
     color: #ccc;
   }
+  i{
+    width: 67px;
+    display: inline-block;
+    text-align: center;
+    position: relative;
+    bottom: 5px;
+    img{
+      width: 18px;
+      position: relative;
+      top: 4px;
+    }
+  }
+  label {
+    display: inline-block;
+    width: 30px;
+    text-align: center;
+    line-height: 37px;
+    cursor: pointer;
+    &:hover{
+      background: @gray-700;
+    }
+  }
   .tab {
-    max-width: 100px;
-    padding: 5px 8px;
-    background: #3c3c3c;
-    border-top: 1px solid #000;
-    border-left: 1px solid #000;
-    border-right: 1px solid #000;
+    max-width: 200px;
+    padding: 0 8px;
+    height: 37px;
+    line-height: 37px;
     .closeIcon {
       width: 18px;
       visibility: hidden;
+      position: absolute;
+      right: -2px;
     }
     .unSavedIcon {
       width: 6px;
@@ -26,11 +51,12 @@
       border-radius: 6px;
       background: #ccc;
       display: inline-block;
-      position: relative;
-      bottom: 2px;
+      position: absolute;
+      right: 2px;
+      top: 15px;
     }
     &:hover{
-      background: #303030;
+      background: @gray-800;
       .closeIcon {
         visibility: visible;
       }
@@ -39,10 +65,18 @@
       }
     }
     .link {
-      width: 100%;
-    }
-    .active {
-      width: 100%;
+      // width: 100px;
+      display: flex;
+      position: relative;
+      padding-right: 15px;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow:ellipsis;
+      .projectName {
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+      }
     }
     .unSaved {
       .closeIcon {
@@ -57,5 +91,9 @@
         }
       }
     }
+  }
+  .active {
+    width: 100%;
+    background: @gray-800;
   }
 }

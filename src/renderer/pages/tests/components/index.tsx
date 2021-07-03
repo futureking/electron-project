@@ -3,8 +3,6 @@ import { useStore } from '../store';
 
 const  Comps: React.FC = () => {
   const [STORE, dispatch]: any = useStore();
-  
-  console.info(STORE);
 
   useEffect(() => {
     dispatch({type: 'SET_STAFF_LIST', payload: '123'})

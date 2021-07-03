@@ -4,22 +4,20 @@ const Routes: IRoute[] = [
   {
     path: '/',
     component: '../layout/TransitionLayout',
+    // path: '/login',
+    // component: '../pages/login',
     routes: [
-      {
-        path: '/',
-        component: './index',
-      },
       {
         path: '/login',
         component: './login',
       },
       {
-        path: '/dashboard',
-        component: './dashboard',
+        path: '/',
+        component: './index',
       },
       {
-        path: '/mainPage',
-        component: './mainPage',
+        path: '/dashboard',
+        component: './dashboard',
       },
       {
         path: '/main',

@@ -1,10 +1,9 @@
 import React from "react";
 import Comps from './components'
-import { setProvider, useStore } from './store';
+import { setProvider } from './store';
 
 const  Tests: React.FC = () => {
-  const [STORE, dispatch]: any = useStore();
-  console.info(STORE, dispatch);
+  // const [STORE, dispatch]: any = useStore();
   return (
     <div className="wrap">
       <Comps />

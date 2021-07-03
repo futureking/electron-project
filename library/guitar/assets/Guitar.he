@@ -1,0 +1,137 @@
+{
+    "Metadata": {
+        "Created": "2021-06-23",
+        "Description": "Instrument Library",
+        "Version": 1
+    },
+    "Pattern": [{
+            "Event": {
+                "Parameters": {
+                    "Frequency": 89,
+                    "Intensity": 100
+                },
+                "Type": "transient",
+                "Duration": 0,
+                "RelativeTime": 11
+            }
+        },
+        {
+            "Event": {
+                "Parameters": {
+                    "Curve": [{
+                            "Frequency": 0,
+                            "Intensity": 0,
+                            "Time": 0
+                        },
+                        {
+                            "Frequency": 0,
+                            "Intensity": 1,
+                            "Time": 7
+                        },
+                        {
+                            "Frequency": -26,
+                            "Intensity": 0.61372548341751099,
+                            "Time": 304
+                        },
+                        {
+                            "Frequency": -22,
+                            "Intensity": 0,
+                            "Time": 426
+                        }
+                    ],
+                    "Frequency": 94,
+                    "Intensity": 48
+                },
+                "Type": "continuous",
+                "Duration": 426,
+                "RelativeTime": 36
+            }
+        },
+        {
+            "Event": {
+                "Parameters": {
+                    "Frequency": 56,
+                    "Intensity": 100
+                },
+                "Type": "transient",
+                "Duration": 0,
+                "RelativeTime": 491
+            }
+        },
+        {
+            "Event": {
+                "Parameters": {
+                    "Curve": [{
+                            "Frequency": 0,
+                            "Intensity": 0,
+                            "Time": 0
+                        },
+                        {
+                            "Frequency": 0,
+                            "Intensity": 0.95490193367004395,
+                            "Time": 16
+                        },
+                        {
+                            "Frequency": -29,
+                            "Intensity": 0.7921568751335144,
+                            "Time": 221
+                        },
+                        {
+                            "Frequency": 0,
+                            "Intensity": 0,
+                            "Time": 492
+                        }
+                    ],
+                    "Frequency": 66,
+                    "Intensity": 54
+                },
+                "Type": "continuous",
+                "Duration": 492,
+                "RelativeTime": 516
+            }
+        },
+        {
+            "Event": {
+                "Parameters": {
+                    "Frequency": 0,
+                    "Intensity": 100
+                },
+                "Type": "transient",
+                "Duration": 0,
+                "RelativeTime": 1013
+            }
+        },
+        {
+            "Event": {
+                "Parameters": {
+                    "Curve": [{
+                            "Frequency": 0,
+                            "Intensity": 0,
+                            "Time": 0
+                        },
+                        {
+                            "Frequency": 0,
+                            "Intensity": 1,
+                            "Time": 7
+                        },
+                        {
+                            "Frequency": 0,
+                            "Intensity": 0.73333334922790527,
+                            "Time": 487
+                        },
+                        {
+                            "Frequency": 0,
+                            "Intensity": 0,
+                            "Time": 694
+                        }
+                    ],
+                    "Frequency": 10,
+                    "Intensity": 64
+                },
+                "Type": "continuous",
+                "Duration": 694,
+                "RelativeTime": 1038
+            }
+        }
+    ]
+}

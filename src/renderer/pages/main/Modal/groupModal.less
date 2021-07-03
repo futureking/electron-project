@@ -1,0 +1,44 @@
+.wrap {
+  width: 312px !important;
+  height: 250px !important;
+  z-index: 111;
+  display: flex;
+  position: absolute;
+  .block{
+    height: 250px !important;
+    display: grid;
+    text-align: center;
+    align-items: center;
+    background: rgba(66, 74, 89, 0.5);
+    border: 1px solid rgba(171, 210, 233, 0.35);
+    box-sizing: border-box;
+    backdrop-filter: blur(10px);
+    border-radius: 5px;
+    cursor: pointer;
+    &:hover {
+      background: rgba(43, 190, 209, 0.479);
+    }
+  }
+  .left {
+    width: 86px !important;
+    height: 250px !important;
+  }
+  .center {
+    width: 132px !important;
+    height: 250px !important;
+    margin: 0 6px;
+    &_block {
+      display: grid;
+      height: 78px !important;
+      margin-bottom: 8px;
+    }
+    span{
+      font-size: 10px;
+      text-align: center;
+    }
+  }
+  .right {
+    width: 86px !important;
+    height: 250px !important;
+  }
+}

@@ -7,22 +7,22 @@ const DashBoard: React.FC = () => {
 
   return(
     <div className={STYLES.wrap}>
-        <div className={STYLES.content}>
-          <SplitBox
-            split="vertical"
-            size={295}
-            minSize={170}
-            maxSize={295}
-            primary="first">
-            <div className={STYLES.left}>
-              <LeftMenu />
-            </div>
-            <div className={STYLES.right}>
-              <RightContent />
-            </div>
-          </SplitBox>
-        </div>
+      <div className={STYLES.content}>
+        <SplitBox
+          split="vertical"
+          size={295}
+          minSize={170}
+          maxSize={295}
+          primary="first">
+          <div className={STYLES.left}>
+            <LeftMenu />
+          </div>
+          <div className={STYLES.right}>
+            <RightContent />
+          </div>
+        </SplitBox>
       </div>
+    </div>
   )
 }
 

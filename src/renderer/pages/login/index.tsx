@@ -1,26 +1,28 @@
 import React, { useState } from "react";
 import { history } from 'umi';
-import { isNull, isUndefined } from 'lodash';
-import { Button, Input, message } from 'antd';
-import { queryLogin } from '@/services/login';
+// import { isNull, isUndefined } from 'lodash';
+// import { Button, Input, message } from 'antd';
+import { Button, Input } from 'antd';
+// import { queryLogin } from '@/services/login';
 import STYLES from './index.less';
+import { PAGE_CHG_DASHBORDER } from "@/../share/define/message";
+const {ipcRenderer} = window;
+// interface responseType {
+//   code: number,
+//   message: string,
+//   result: object,
+//   success: boolean,
+//   timestamp: number,
+//   [key:string]: any
+// }
 
-interface responseType {
-  code: number,
-  message: string,
-  result: object,
-  success: boolean,
-  timestamp: number,
-  [key:string]: any
-}
-
-const checkStr = (str:string) => {
-  if(isNull(str) || isUndefined(str) || str==='') {
-    return true;
-  }else {
-    return false;
-  }
-}
+// const checkStr = (str:string) => {
+//   if(isNull(str) || isUndefined(str) || str==='') {
+//     return true;
+//   }else {
+//     return false;
+//   }
+// }
 
 const  Login: React.FC = () => {
   const [userName, setUserName] = useState<string>('');
@@ -28,20 +30,22 @@ const  Login: React.FC = () => {
 
 
   const onQuery = () => {
-    const queryData = {userName, userPwd};
-    if(checkStr(userName)){
-      message.info('请输入用户名')
-    }else if(checkStr(userPwd)) {
-      message.info('请输入密码')
-    }else {
-      queryLogin<any>(queryData).then((res: responseType) => {
-        if(res.code === 200) {
-          history.push('/dashboard');
-        }else {
-          message.error(res.message);
-        }
-      });
-    }
+    ipcRenderer.invoke(PAGE_CHG_DASHBORDER).then(() =>history.push('/dashboard'));
+    // const queryData = {userName, userPwd};
+    // if(checkStr(userName)){
+    //   message.info('请输入用户名')
+    // }else if(checkStr(userPwd)) {
+    //   message.info('请输入密码')
+    // }else {
+    //   queryLogin<any>(queryData).then((res: responseType) => {
+    //     if(res.code === 200) {
+    //       // ipcRenderer.invoke(PAGE_CHG_DASHBORDER).then(() =>history.push('/dashboard'));
+          
+    //     }else {
+    //       message.error(res.message);
+    //     }
+    //   });
+    // }
   }
 
   return (

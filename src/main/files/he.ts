@@ -1,13 +1,15 @@
 import { app, dialog, OpenDialogOptions, SaveDialogOptions } from 'electron'
 // import { IpcMainEvent } from 'electron/main'
 import { promises as fs } from 'fs'
+import { isUndefined } from 'lodash'
 import path from 'path'
+import { IpcHeProps } from 'src/share/define/ipc'
 import { CurvePoint, EventItem, HeV1, HeV2, ICurvePoint, IEvent, Event, IEventItem, IHeV1, IHeV2, IMetadata, IParameters, IPatternItem, Metadata, Parameters, PatternItem } from '../../share/data/IRichTap'
-
+const log = require('electron-log')
 const importHeOptions: OpenDialogOptions = {
   title: "Select He file",
   buttonLabel: "OK",
-  defaultPath: app.getPath('desktop'),
+  defaultPath: app.getPath('documents'),
   properties: ['openFile'],
   filters: [
     { name: 'RichTap File Type', extensions: ['he'] },
@@ -30,29 +32,32 @@ async function importHe() {
     const dialogRet = await openFile(importHeOptions);
     if (dialogRet.canceled || dialogRet.filePaths.length === 0)
       return;
-    const readRet = await fs.readFile(dialogRet.filePaths[0]);
-    if (readRet.length === 0)
-      return;
-    return await loadHe(dialogRet.filePaths[0], readRet.toString());
-  } catch (error) {
-    console.log(error);
+    const filename = dialogRet.filePaths[0];
+    const base = path.basename(filename, path.extname(filename));
+    return await loadHe(base, filename);
+  } catch (e) {
+    log.error('importHe error', e);
   }
-  return
+  return;
 }
 
-async function loadHe(name: string, str: string) {
-  let json = JSON.parse(str);
+async function loadHe(name: string, target: string) {
+  const readRet = await fs.readFile(target);
+  if (readRet.length === 0)
+    return;
+  let json = JSON.parse(readRet.toString());
   if (verifyHe(json)) {
     let obj = parseHe(json);
-    if (!!obj) {
-      return Promise.resolve({
+    if (!isUndefined(obj)) {
+      const ret: IpcHeProps = {
         version: obj.Metadata.Version,
-        name: path.basename(name, '.he'),
+        name: name,
         data: JSON.stringify(obj)
-      });
+      }
+      return Promise.resolve(ret);
     }
   }
-  return Promise.reject('load failed');
+  return;
 }
 
 async function exportHe(stream: string) {
@@ -63,21 +68,21 @@ async function exportHe(stream: string) {
     if (dialogRet.canceled || typeof dialogRet.filePath === 'undefined')
       return;
     await fs.writeFile(dialogRet.filePath, stream);
-  } catch (error) {
-    console.error(error);
+  } catch (e) {
+    log.error('exportHe error', e);
   }
 }
 
 function checkKey(obj: Object, key: string, parentKey: string = ''): boolean {
   if (!obj.hasOwnProperty(key)) {
-    console.log('Miss key ' + key + (parentKey === '' ? '' : (' in ' + parentKey)))
+    log.warn('Miss key ' + key + (parentKey === '' ? '' : (' in ' + parentKey)))
     return false
   }
   if (typeof (obj[key]) !== 'undefined' && obj[key] !== null) {
     return true
   }
   else {
-    console.log(key + '\'s value is null')
+    log.warn(key + '\'s value is null')
     return false
   }
 }
@@ -93,7 +98,7 @@ function verifyHe(obj: Object): boolean {
     return ret
 
   let version = metadata['Version'];
-  console.log('verify ver: ', version)
+  log.debug('verify ver: ', version)
   if (version == 1) {
     return verifyPattern(obj, version);
   }
@@ -111,7 +116,7 @@ function verifyPatternList(obj: Object, ver: number): boolean {
     return ret
   let patternList = obj['PatternList']
   if (!Array.isArray(patternList)) {
-    console.log('Pattern type error')
+    log.warn('Pattern type error')
     return false
   }
   for (let i = 0; i < patternList.length; i++) {
@@ -131,11 +136,11 @@ function verifyPattern(obj: Object, ver: number): boolean {
 
   let pattern = obj['Pattern'];
   if (!Array.isArray(pattern)) {
-    console.log('Pattern type error')
+    log.warn('Pattern type error')
     return false
   }
   if (pattern.length > 16) {
-    console.log('Event count overrange:', pattern.length)
+    log.warn('Event count overrange:', pattern.length)
     return false
   }
   for (let i = 0; i < pattern.length; i++) {
@@ -151,7 +156,7 @@ function verifyPattern(obj: Object, ver: number): boolean {
 
 function verifyEvent(obj: Object, ver: number): boolean {
   if (obj === {}) {
-    console.log('Type:' + + ' error')
+    log.warn('Type:' + + ' error')
     return false
   }
 
@@ -163,7 +168,7 @@ function verifyEvent(obj: Object, ver: number): boolean {
     return ret
   let type = obj['Type']
   if (type !== 'transient' && type !== 'continuous') {
-    console.log('Type:' + type + ' error')
+    log.warn('Type:' + type + ' error')
     return false
   }
   if (type === 'continuous') {
@@ -197,10 +202,10 @@ function verifyParam(obj: Object, ver: number, isContinuous: boolean): boolean {
       return ret
     let curve = obj['Curve']
     if (!Array.isArray(curve)) {
-      console.log('Curve type error')
+      log.warn('Curve type error')
     }
     if (curve.length > (ver === 1 ? 4 : 16)) {
-      console.log('Curve count overrange:', curve.length)
+      log.warn('Curve count overrange:', curve.length)
       return false
     }
 
@@ -214,7 +219,7 @@ function verifyParam(obj: Object, ver: number, isContinuous: boolean): boolean {
         return ret
       let intens_p = p['Intensity']
       if (intens_p < 0 || intens_p > 1) {
-        console.log('CurvePonit ' + i + ' Intensity overrange:', intens_p)
+        log.warn('CurvePonit ' + i + ' Intensity overrange:', intens_p)
         return false
       }
       ret = checkKey(p, 'Frequency', 'Curve')
@@ -222,7 +227,7 @@ function verifyParam(obj: Object, ver: number, isContinuous: boolean): boolean {
         return ret
       let freq_p = p['Frequency']
       if (freq_p < -100 || freq_p > 100) {
-        console.log('CurvePonit ' + i + ' Frequency overrange:', freq_p)
+        log.warn('CurvePonit ' + i + ' Frequency overrange:', freq_p)
         return false
       }
     }
@@ -245,7 +250,7 @@ function parseHe(json: Object): IHeV1 | IHeV2 | undefined {
     return new HeV2(metadata, pattrenList)
   }
   else
-    return undefined;
+    return;
 }
 
 function parseMetadata(obj: Object): IMetadata {
@@ -318,4 +323,4 @@ function comparePattern(a: IPatternItem, b: IPatternItem): number {
   else
     return 0
 }
-export { importHe, exportHe, verifyHe, parseHe };
+export { importHe, exportHe, verifyHe, parseHe, loadHe };
